@@ -284,6 +284,8 @@ int main (int argc, char *argv[])
         int k=0;
         while(vectors[k].vector != NULL) {
             if  (vectors[k].type == TYPE_OUTPUT) {
+                printf("AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB\n");
+                printf("ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV\n");
                 tests_checkDriveStrength(board_config, vectors[k].vector, args.single_step);
             }
             if (vectors[k].type == TYPE_DEBUG_EXIT) {

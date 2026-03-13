@@ -60,7 +60,8 @@ int tests_selfTest(void)
         if (function == PIN_POWER) {
             printf("PIN %s, PIN_POWER                                                      [  --  ]\n", str);
         } else {
-            int voltage_ok = 0;
+            int voltage_l_ok = 0;
+            int voltage_h_ok = 0;
             int current_ok = 0;
             float current;
             int data_h, data_l;
@@ -93,16 +94,23 @@ int tests_selfTest(void)
             hal_measureCurrent (&current);
             hal_enableLoad(0, false);
 
-            if ( fabs(voltage_l) < 10.0 && fabs(voltage_h + 3700.0 ) < 50.0) {
-                voltage_ok = 1;
+            if ( fabs(voltage_l) < 10.0 ) {
+                voltage_l_ok = 1;
+            }
+
+            if ( fabs(voltage_h + 3700.0 ) < 50.0) {
+                voltage_h_ok = 1;
             }
 
             if ( fabs(current + 4.0) < 0.1){
                 current_ok = 1;
             }
 
-            printf("PIN %s, D '1':%d (%7.1f mV), D '0':%d (%7.1f mV) I -4 mA: %7.1f mA [ %s ]\n",
-                str, data_h, voltage_h, data_l, voltage_l, current, (!data_l && data_h && voltage_ok && current_ok) ? " OK " : "FAIL");
+            printf("PIN %s, D '1':%d (%7.1f mV) [%s], D '0':%d (%7.1f mV) [%s], I -4 mA: %7.1f mA [%s]\n",
+                    str,
+                    data_h, voltage_h, (data_h && voltage_h_ok) ? " OK " : "FAIL",
+                    data_l, voltage_l, (!data_l && voltage_l_ok) ? " OK " : "FAIL",
+                    current, current_ok ? " OK " : "FAIL");
             pin_setMeasure(k, 0);
             pin_setFunction(k, PIN_DISABLED);
         }
@@ -345,7 +353,8 @@ int tests_checkPullDown(struct config const *b_cfg)
      */
 
     for (int pin = AA; pin < LAST_PIN; pin ++) {
-        int voltage_ok = 0;
+        int voltage_l_ok = 0;
+        int voltage_h_ok = 0;
         int current_ok = 0;
         char *pinName;
 
@@ -376,9 +385,12 @@ int tests_checkPullDown(struct config const *b_cfg)
             /*
              * Check voltage high and low against configuration
              */
-            if ( fabs(voltage_l - b_cfg->load_low) < b_cfg->load_low_margin &&
-                 fabs(voltage_h - b_cfg->load_high) < b_cfg->load_high_margin){
-                voltage_ok = 1;
+            if (fabs(voltage_l - b_cfg->load_low) < b_cfg->load_low_margin){
+                voltage_l_ok = 1;
+            }
+
+            if (fabs(voltage_h - b_cfg->load_high) < b_cfg->load_high_margin){
+                voltage_h_ok = 1;
             }
 
             /*
@@ -388,7 +400,11 @@ int tests_checkPullDown(struct config const *b_cfg)
                 current_ok = 1;
             }
 
-            printf("Pin: %s %c voltage %7.1f %7.1f %7.1f [ %s ]\n", pinName, str[pin], voltage_l, voltage_h, current, (voltage_ok && current_ok) ? " OK " : "FAIL");
+            printf("Pin: %s %c V_low: %7.1fmV [ %s ]  V_high: %7.1fmV [ %s ]  I: %7.1fmA [ %s ]\n",
+                    pinName, str[pin],
+                    voltage_l, voltage_l_ok ? " OK " : "FAIL",
+                    voltage_h, voltage_h_ok ? " OK " : "FAIL",
+                    current, current_ok ? " OK " : "FAIL");
             break;
         default:
             printf("ERROR: Format error\n");
@@ -628,7 +644,8 @@ int tests_checkInputs(struct config const *b_cfg)
     for (int pin = AA; pin < LAST_PIN; pin++) {
         if (setup[pin] == 'i') {
             float current, voltage;
-            int result;
+            int voltage_result = 9999;
+            int current_result = 9999;
 
             char *str;
             pin_getName(pin, &str);
@@ -638,26 +655,38 @@ int tests_checkInputs(struct config const *b_cfg)
             hal_measureCurrent(&current);
             hal_measureVoltage(&voltage);
 
-            if ((fabs(voltage - b_cfg->input_voltage_low) > 100) ||
-                (fabs(current - b_cfg->input_current_low) > b_cfg->input_current_margin)){
-                result = 0;
+            if ((fabs(voltage - b_cfg->input_voltage_low) > 100)){
+                voltage_result = 0;
             } else {
-                result = 1;
+                voltage_result = 1;
             }
 
-            printf("Pin: %s 0 voltage %7.1f current %7.1f [ %s ]\n", str, voltage, current, result ? " OK " : "FAIL");
+            if (fabs(current - b_cfg->input_current_low) > b_cfg->input_current_margin){
+                current_result = 0;
+            } else {
+                current_result = 1;
+            }
+
+            printf("Pin: %s 0 V: %7.1fmV [ %s ]    I: %7.1fmA [ %s ]\n", str, voltage,
+                    voltage_result ? " OK " : "FAIL", current, current_result ? " OK " : "FAIL");
             pin_setDataOut(pin, 0);
             usleep(100000);
             hal_measureCurrent(&current);
             hal_measureVoltage(&voltage);
 
-            if ((fabs(voltage - b_cfg->input_voltage_high) > 100) ||
-                (fabs(current - b_cfg->input_current_high) > b_cfg->input_current_margin)){
-                result = 0;
+            if (fabs(voltage - b_cfg->input_voltage_high) > 100){
+                voltage_result = 0;
             } else {
-                result = 1;
+                voltage_result = 1;
             }
-            printf("Pin: %s 1 voltage %7.1f current %7.1f [ %s ]\n", str, voltage, current, result ? " OK " : "FAIL");
+
+            if (fabs(current - b_cfg->input_current_high) > b_cfg->input_current_margin){
+                current_result = 0;
+            } else {
+                current_result = 1;
+            }
+            printf("Pin: %s 1 V: %7.1fmV [ %s ]    I: %7.1fmA [ %s ]\n", str, voltage,
+                    voltage_result ? " OK " : "FAIL", current, current_result ? " OK " : "FAIL");
             pin_setMeasure(pin, 0);
             pin_setDataOut(pin, 0);
         }
