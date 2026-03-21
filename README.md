@@ -48,7 +48,7 @@ $ brs-tester selftest
 ```
 Run test on a board, loop logical test loop number of times.
 ```
-$ brs-tester test --vector=vectors/b104.fct --loop=10
+$ brs-tester test --vector=vectors/b104.fct --iterations=10
 ```
 Turn on power to the test object.
 ```

@@ -8,7 +8,7 @@ Copyright (C)  2024  Anders Sandahl, Michael Thompson.
 Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.3 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.\
 \
 A copy of the license is included in the section entitled "GNU Free Documentation License".
-``` 
+```
 Table of Contents
 1.	Introduction
 2.	Theory of Operation
@@ -155,7 +155,7 @@ PIN_AS	D6	BOARD A Pin 32	AS2
 PIN_AT	D7	BOARD A Pin 34	AT2
 PIN_AU	D7	BOARD A Pin 36	AU2
 PIN_AV	D8	BOARD A Pin 38	AV2
-			
+
 10V_SWITCHED	N/C	BOARD B Pin 4	BA2
 -15V_SWITCHED	N/C	BOARD B Pin 6	BB2
 GND	N/C	BOARD B Pin 8	BC2
@@ -269,14 +269,14 @@ $ sudo apt install i2c-tools
 $ sudo modprobe i2c-dev
 $ sudo i2cdetect -y -a -r 1
      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-00: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-40: -- -- -- -- -- -- -- -- 48 -- -- -- -- -- -- -- 
-50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-70: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+00: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+40: -- -- -- -- -- -- -- -- 48 -- -- -- -- -- -- --
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+70: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 $
 ```
 The "48" is the correct I<sup>2</sup>C address for the DAC.
@@ -293,16 +293,16 @@ You can connect to the Raspberry Pi through the network using a VNC Viewer or th
 
 ## 4.2	Tester Software Command Line Options
 ```
--l, --loop[=NUMBER]        Number of iterations, doing loop testing [test]
+-i, --iterations[=NUMBER]  Number of iterations, doing loop testing [test]
 -p, --pin[=PIN]            Manual pin manipulation [debug]
--P, --power-enable[=on/off]   Manual power control [debug]
+-E, --enable-power[=on/off]   Manual power control [debug]
 -s, --pin-state[=1/0/T]    Manual pin state [debug]
 -v, --vector[=FILE]        Test vector to run [test]
 -?, --help                 Give this help list
     --usage                Give a short usage message
 -V, --version              Print program version
 ```
-Note: If --loop=0 the Logic Test will not be performed.
+Note: If --iterations=0 the Logic Test will not be performed.
 
 ## 4.3	Tester Software Command Line Examples
 
@@ -310,9 +310,9 @@ Test that libgpiod is installed and working. You should see a long list detailin
 ```
 $ gpioinfo
 gpiochip0 - 54 lines:
-	line   0:     "ID_SDA"       unused  output  active-high 
-	line   1:     "ID_SCL"       unused  output  active-high 
-	line   2:      "GPIO2"       unused   input  active-high 
+	line   0:     "ID_SDA"       unused  output  active-high
+	line   1:     "ID_SCL"       unused  output  active-high
+	line   2:      "GPIO2"       unused   input  active-high
 ...
 ```
 
@@ -405,7 +405,7 @@ Drive strength: 32 mA, meas: (-28.2 mA) (-384.3 mV)                    [  OK  ]
 
 Run a test on a B104 FlipChip, and execute the logical test loop 10 times.
 ```
-$ brs-tester test --vector=vectors/b104.fct --loop=10
+$ brs-tester test --vector=vectors/b104.fct --iterations=10
 ```
 
 ## 5. Test Vector Files
@@ -534,13 +534,13 @@ $ brs-tester debug --power-enable=off
 The Toggle definition of a pin in a Config line can be used to flip the logic state of a pin the number of times defined in the "toggles" line. This is useful for tracing an input signal through the logic on a FlipChip.
 
 
-Output pins of FlipChips that are not Open-Collector are clamped to about -3.5V. If the tester sees an output voltage from the FlipChip that is more than -3.7V the test process will stop. 
+Output pins of FlipChips that are not Open-Collector are clamped to about -3.5V. If the tester sees an output voltage from the FlipChip that is more than -3.7V the test process will stop.
 
 # 7.	Golang Setup for the GUI BRS Tester
 ## 7.1 Installing the Golang Software
 Install Go, gcc and the graphics library header files using the package manager.
 ```
-$ sudo apt-get install golang gcc libegl1-mesa-dev xorg-dev 
+$ sudo apt-get install golang gcc libegl1-mesa-dev xorg-dev
 ```
 
 Install the Fyne GUI toolkit

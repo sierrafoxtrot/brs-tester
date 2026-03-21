@@ -51,8 +51,8 @@ static char doc[] =
 /* The options we understand. */
 static struct argp_option options[] = {
     {"vector",       'v', "FILE",     OPTION_ARG_OPTIONAL, "Test vector to run [test]"},
-    {"loop",         'l', "NUMBER",   OPTION_ARG_OPTIONAL, "Number of iterations, doing loop testing [test]"},
-    {"power-enable", 'P', "on/off",   OPTION_ARG_OPTIONAL, "Manual power control [debug]"},
+    {"iterations",   'i', "NUMBER",   OPTION_ARG_OPTIONAL, "Number of iterations, doing loop testing [test]"},
+    {"enable-power", 'E', "on/off",   OPTION_ARG_OPTIONAL, "Manual power control [debug]"},
     {"pin",          'p', "PIN",      OPTION_ARG_OPTIONAL, "Manual pin manipulation [debug]"},
     {"pin-state",    's', "1/0/T/L",  OPTION_ARG_OPTIONAL, "Manual pin state [debug]"},
     {"load",         'L', "NUMBER",   OPTION_ARG_OPTIONAL, "Manual setting load on a pin [debug]"},
@@ -87,7 +87,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
     case 'v':
         arguments->vector_file = arg;
         break;
-    case 'l':
+    case 'i':
         if (arg != NULL) {
             arguments->loops = atoi(arg);
         } else {
@@ -102,7 +102,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
             argp_usage(state);
             return ARGP_ERR_UNKNOWN;
         }
-    case 'P':
+    case 'E':
         if (arg != NULL && ((0 == strncmp(arg, "on", sizeof("on") -1)))) {
             arguments->power = PWR_ENABLE;
         } else if (arg != NULL && ((0 == strncmp(arg, "off", sizeof("off") -1)))) {
