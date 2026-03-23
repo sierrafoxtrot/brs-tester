@@ -1,0 +1,100 @@
+# Bus Driver R650
+#
+#
+# First, every line starting with a '#' will be treated as a comment line
+# Blank lines will also be skipped.
+
+# Those two following lines are just helpers to make it easier to configure the right pin.
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+
+# The 'config' key describes how the tested board has it connections.
+#
+# 'p' - power pin, do nothing
+# 'i' - input pin on tested board
+# 'o' - output pin on tested board
+# 'O' - output pin on tested board, open collector
+# 'd' - pull down net on tested board
+# 'g' - pin should be grounded on tested board
+# '-' - pin should not be used, don't care and it will be electrically disconnected
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+# For now, let's leave the H & S, F & R, L & V inputs to float
+# Might be nice in the future to add a third "floating" state for an input
+config='pppii--oo--ii--oo-------------------'
+
+# There can be multiple 'vector' keys. They are processed in order from top to bottom in the file.
+# If pin is configured to input, '01T' are valid configurations. 'T' toggles one pin only (one T per row)
+# and it's purpose is for debugging and half manual tests.
+# If the pin is configured as output, the pin value will be checked against
+# the given value (only '0' and '1' is valid) after all inputs has been set.
+#
+# From the datasheet: The diode inputs D and E (N and P) are the principle inputs.
+# They form a NAND gate for negative inputs or a NOR gate for ground inputs.
+#
+# We can ignore the F(R) input as it just bypasses the input diodes.
+# Similarly, we can ignore the L(V) input as it only bypasses the first stage.
+#
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#       pppii--oo--ii--oo-------------------
+vector='---00--11--00--11-------------------'
+vector='---01--11--01--11-------------------'
+vector='---10--11--10--11-------------------'
+vector='---11--00--11--00-------------------'
+
+# load-* keys are used to define limit values for tests of load networks
+# present on some boards. Used when the 'd' operator is found in the config string.
+load-low='-3700mV'
+load-low-margin='200mV'
+load-high='-50mV'
+load-high-margin='100mV'
+load-current='-10mA'
+load-current-margin='0.2mA'
+
+# input-* keys defined limits when testing inputs
+input-current-margin='1.0mA'
+
+# For a digital '0'
+input-voltage-high='-10mV'
+input-current-high='-1.0mA'
+
+# For a digital '1'
+input-voltage-low='-3700mV'
+input-current-low='0mA'
+
+# Number of times a pin should toggle when the 'T' function is used in the vector string.
+toggles='1000'
+
+# Define output testing. One line to set inputs so that the outputs are "0".
+# Outputs can only be loaded to -3V. The output value is not used but can be
+# useful. The L defines which outputs that should be tested. They can be on
+# a single line but can also be on several rows.
+
+
+#             AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#             ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#             pppii--oo--ii--oo-------------------
+output-drive='---11------00-----------------------'
+#output-drive='---11--L---00-----------------------' # skip non-coax output
+output-drive='---11---L--00-----------------------'
+output-drive='---00------11-----------------------'
+#output-drive='---00------11--L--------------------' # skip non-coax output
+output-drive='---00------11---L-------------------'
+
+
+# output-drives-strength defines how much current the outputs can sink.
+# This is a value is what the tester will load the output with.
+output-drive-strength='5mA'
+
+# Those two values will define the voltage drop over the transistor compared to ground. First
+# the nominal value and then a margin that defines how much the value could diff from that.
+output-voltage-high='-350mV'
+output-voltage-margin='100mV'
+
+# note: the voltage drop on the coax outputs is significantly higher due to the termination
+# resistor. Also factoring in the TTL-tyle totem pole output structure on the R650.
+# Perhaps adding the ability to have multiple output drive values would be useful.
+# For now, the main useful results are for the coax outputs which will verify that the resistor
+# value is reasonable. The logic tests above verify that the connection from the transistor
+# side of the termination resistor is good.
