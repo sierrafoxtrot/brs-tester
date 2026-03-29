@@ -102,6 +102,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
             argp_usage(state);
             return ARGP_ERR_UNKNOWN;
         }
+        break;
     case 'E':
         if (arg != NULL && ((0 == strncmp(arg, "on", sizeof("on") -1)))) {
             arguments->power = PWR_ENABLE;
