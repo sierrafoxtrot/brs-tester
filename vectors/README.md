@@ -27,6 +27,7 @@ This table contains status of the different test vectors. A test vector should h
 |r203.fct     | I    |    |                                     |
 |s206.fct     | I    |    |                                     |
 |s151.fct     | OK   |    |                                     |
+|s181.fct     | OK   |    |                                     |
 |w005.fct     | OK   |    |                                     |
 
 |Status |Description                    |

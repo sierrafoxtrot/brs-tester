@@ -1,0 +1,80 @@
+# Test for S181, DC Carry Chain
+#
+# -3V = Logic 1
+# 0V = Logic 	0
+# Define the limits when testing inputs
+# S-Series flip-chips are increased speed at the expense of lower fan-out and
+# (likely) increased ringing.
+# Input loads are wide ranging due to the inbuilt diode array. Allow for this
+# until we have a method for testing variable input loads on a single flip-chip:
+#    M & H: 6mA
+#    F:     5mA
+#    K:     4mA
+#    E:     3mA
+#    D & L: 1mA
+input-current-low='0.0mA'
+input-current-high='-3mA'
+input-current-margin='3mA'
+input-voltage-low='-3700mV'
+input-voltage-high='-50mV'
+
+# Define how much current the outputs can sink
+output-drive-strength='15mA'
+output-voltage-high='-100mV'
+output-voltage-margin='100mV'
+
+# The 'config' key describes how the tested board has it connections.
+#
+# 'p' - power pin, do nothing
+# 'i' - input pin on tested board
+# 'o' - output pin on tested board
+# 'O' - output pin on tested board, open collector
+# 'd' - pull down net on tested board
+# 'g' - pin should be grounded on tested board
+# '-' - pin should not be used, don't care and it will be electrically disconnected
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+config='pppiiiiiiiiooooooo------------------'
+# Check the input pull-down diodes and resistors when the inputs are floating
+vector='-----------0000000------------------'
+# Drive each input to a logic 1 and check the corresponding inverted output
+vector='---1-------0000000------------------'
+vector='----1------0000000------------------'
+vector='-----1-----0000000------------------'
+vector='------1----0000000------------------'
+vector='-------1---0000000------------------'
+vector='--------1--0000000------------------'
+vector='---------1-0000000------------------'
+vector='----------10000000------------------'
+# Drive each input to a logic 0 and check the corresponding inverted output
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'pppiiiiiiiiooooooo------------------'
+vector='---0-------0000010------------------'
+vector='----0------0100110------------------'
+vector='-----0-----1110110------------------'
+vector='------0----1111110------------------'
+vector='-------0---0000110------------------'
+vector='--------0--1100110------------------'
+vector='---------0-0000001------------------'
+vector='----------01111110------------------'
+
+
+# Drive all inputs to a logic 1 and check the corresponding inverted outputs
+vector='---111111110000000------------------'
+# Drive all inputs to a logic 0 and check the corresponding inverted outputs
+vector='---000000001111111------------------'
+# Float the inputs and check that the outputs are a logic 0
+vector='-----------0000000------------------'
+
+#             AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#             ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+# config     'pppiiiiiiiiooooooo------------------'
+output-drive='------1----L------------------------'
+output-drive='------1-----L-----------------------'
+output-drive='------1------L----------------------'
+output-drive='------1-------L---------------------'
+output-drive='------1--------L--------------------'
+output-drive='------1---------L-------------------'
+output-drive='---------1-------L------------------'
