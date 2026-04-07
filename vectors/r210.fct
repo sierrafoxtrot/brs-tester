@@ -8,7 +8,8 @@
 # AT and AU are the JK inputs
 # AV is the shared clock pulse input
 # AR is the direct clear input
-# AE is the direct set input
+# AS is the direct set input
+# AE is the input mixer (connected to direct set)
 # AF and AP are the outputs
 #
 # flip-flop 1 on the R202 for comparison:
@@ -50,46 +51,58 @@ output-drive-strength='11mA'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-config='ppp-io------oi-iiippp---------------'
+config='ppp-io------oiiiiippp---------------'
 # Hold all of the control inputs inactive, ignore the outputs
-vector='----1--------1-111------------------'
+vector='----1--------11111------------------'
+
+# Let's clear the flip-flop
 # Drive AR Direct Clear input active, check both outputs
-vector='----11------00-111------------------'
+vector='----11------001111------------------'
 # Drive AR Direct Clear input inactive, check both outputs
-vector='----11------01-111------------------'
+vector='----11------011111------------------'
 
-# Drive AE Direct Set input active, check both outputs
-vector='----00------11-111------------------'
-# Drive AE Direct Set input inactive, check for no change on the outputs
-vector='----10------11-111------------------'
+# Let's set the flip-flop
+# Drive AS Direct Set input active, check both outputs
+vector='----10------110111------------------'
+# Drive AS Direct Set input inactive, check for no change on the outputs
+vector='----10------111111------------------'
+
+# Let's clear and set the flip-flop again using the input mixer
+# Clear it:
+vector='----11------001111------------------'
+vector='----11------011111------------------'
+# Drive AE mixer input active, check both outputs
+vector='----00------111111------------------'
+# Drive AE mixer input inactive, check for no change on the outputs
+vector='----10------111111------------------'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-#config'ppp-io------oi-iiippp---------------'
+#config'ppp-io------oiiiiippp---------------'
 # Drive the AT Level Input active, check for no change on the outputs
-vector='----10------11-011------------------'
+vector='----10------111011------------------'
 # Drive the AV Pulse Input active, flip-flip should be cleared
-vector='----11------01-010------------------'
+vector='----11------011010------------------'
 # Drive the AV Pulse Input inactive, flip-flip should stay cleared
-vector='----11------01-011------------------'
+vector='----11------011011------------------'
 # Drive the AT Level Input inactive, check for no change on the outputs
-vector='----11------01-111------------------'
+vector='----11------011111------------------'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-#config'ppp-io------oi-iiippp---------------'
+#config'ppp-io------oiiiiippp---------------'
 # Drive the AU Level Input active, check for no change on the outputs
-vector='----11------01-101------------------'
+vector='----11------011101------------------'
 # Drive the AV Pulse Input active, flip-flip should be set
-vector='----10------11-100------------------'
+vector='----10------111100------------------'
 # Drive the AV Pulse Input inactive, check for no change on the outputs
-vector='----10------11-101------------------'
+vector='----10------111101------------------'
 # Drive the AU Level Input inactive, check for no change on the outputs
-vector='----10------11-111------------------'
+vector='----10------111111------------------'
 
 # Wiggle the Level Inputs, check for no change on the outputs
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-#config'ppp-io------oi-iiippp---------------'
-vector='----10------11-001------------------'
-vector='----10------11-111------------------'
+#config'ppp-io------oiiiiippp---------------'
+vector='----10------111001------------------'
+vector='----10------111111------------------'
