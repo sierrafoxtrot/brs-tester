@@ -10,7 +10,7 @@
 # AR is the direct clear input
 # AS is the direct set input
 # AE is the input mixer (connected to direct set)
-# AF and AP are the outputs
+# AF and AP are the 0 and 1 outputs respectively
 #
 # flip-flop 1 on the R202 for comparison:
 # E and L are the JK inputs
@@ -28,8 +28,9 @@
 # -3V = 1
 # 0V = 0
 # Define the limits when testing inputs
+# Inputs are 11mA load at gnd; Refer F-85 PDP-8 Users Handbook
 input-current-low='0.0mA'
-input-current-high='-1.7mA'
+input-current-high='-11mA'
 input-current-margin='1.0mA'
 input-voltage-low='-3700mV'
 input-voltage-high='-50mV'
@@ -49,19 +50,20 @@ output-drive-strength='11mA'
 # 'g' - pin should be grounded on tested board
 # '-' - pin should not be used, don't care and it will be electrically disconnected
 
+
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
 config='ppp-io------oiiiiippp---------------'
 # Hold all of the control inputs inactive, ignore the outputs
 vector='----1--------11111------------------'
 
-# Let's clear the flip-flop
+# Let's clear the flip-flop with the direct clear input
 # Drive AR Direct Clear input active, check both outputs
 vector='----11------001111------------------'
 # Drive AR Direct Clear input inactive, check both outputs
 vector='----11------011111------------------'
 
-# Let's set the flip-flop
+# Let's set the flip-flop with the direct set input
 # Drive AS Direct Set input active, check both outputs
 vector='----10------110111------------------'
 # Drive AS Direct Set input inactive, check for no change on the outputs
@@ -76,29 +78,99 @@ vector='----00------111111------------------'
 # Drive AE mixer input inactive, check for no change on the outputs
 vector='----10------111111------------------'
 
+# Test the various DCD inputs. Tests follow a basic pattern:
+# 0. Setup by setting the flip-flop
+# 0.1: Activate the direct set input
+# 0.2: Deactivate the direct set input
+# 1. Test setting the flip-flop
+# 1.1: Activate the level input (enable)
+# 1.2: Activate the edge input (clock)
+# 1.3: Deactivate the edge input
+# 1.4: Deactivate the level input
+# 2. Test clearing the flip-flop
+# 1.1: Activate the level input (enable)
+# 1.2: Activate the edge input (clock)
+# 1.3: Deactivate the edge input
+# 1.4: Deactivate the level input
+
+####################################################################
+# Testing CLK: AV   JK inputs: AT/AU
+####################################################################
+# 0. Setup
+# Drive AR Direct Set input active, check both outputs
+vector='----10------110111------------------'
+# Drive AR Direct Set input inactive, check both outputs
+vector='----10------111111------------------'
+
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
 #config'ppp-io------oiiiiippp---------------'
-# Drive the AT Level Input active, check for no change on the outputs
+# 1.1 Drive the AT Level Input active, check for no change on the outputs
 vector='----10------111011------------------'
-# Drive the AV Pulse Input active, flip-flip should be cleared
+# 1.2 Drive the AV Pulse Input active, flip-flip should be cleared
 vector='----11------011010------------------'
-# Drive the AV Pulse Input inactive, flip-flip should stay cleared
+# 1.3 Drive the AV Pulse Input inactive, flip-flip should stay cleared
 vector='----11------011011------------------'
-# Drive the AT Level Input inactive, check for no change on the outputs
+# 1.4 Drive the AT Level Input inactive, check for no change on the outputs
 vector='----11------011111------------------'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
 #config'ppp-io------oiiiiippp---------------'
-# Drive the AU Level Input active, check for no change on the outputs
+# 2.1 Drive the AU Level Input active, check for no change on the outputs
 vector='----11------011101------------------'
-# Drive the AV Pulse Input active, flip-flip should be set
+# 2.2 Drive the AV Pulse Input active, flip-flip should be set
 vector='----10------111100------------------'
-# Drive the AV Pulse Input inactive, check for no change on the outputs
+# 2.3 Drive the AV Pulse Input inactive, check for no change on the outputs
 vector='----10------111101------------------'
-# Drive the AU Level Input inactive, check for no change on the outputs
+# 2.4 Drive the AU Level Input inactive, check for no change on the outputs
 vector='----10------111111------------------'
+
+
+####################################################################
+# Testing CLK: BJ   JK inputs: BA/BB
+####################################################################
+#
+# Need to resolve hardware issue with access to these pins first!!!!
+#
+
+
+####################################################################
+# Testing CLK: AV   JK inputs: AT/AU  *** OLD ***
+# Testing CLK: BJ   JK inputs: BA/BB
+####################################################################
+# 0. Setup
+# Drive AR Direct Set input active, check both outputs
+vector='----10------110111------------------'
+# Drive AR Direct Set input inactive, check both outputs
+vector='----10------111111------------------'
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'ppp-io------oiiiiippp---------------'
+# 1.1 Drive the AT Level Input active, check for no change on the outputs
+vector='----10------111011------------------'
+# 1.2 Drive the AV Pulse Input active, flip-flip should be cleared
+vector='----11------011010------------------'
+# 1.3 Drive the AV Pulse Input inactive, flip-flip should stay cleared
+vector='----11------011011------------------'
+# 1.4 Drive the AT Level Input inactive, check for no change on the outputs
+vector='----11------011111------------------'
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'ppp-io------oiiiiippp---------------'
+# 2.1 Drive the AU Level Input active, check for no change on the outputs
+vector='----11------011101------------------'
+# 2.2 Drive the AV Pulse Input active, flip-flip should be set
+vector='----10------111100------------------'
+# 2.3 Drive the AV Pulse Input inactive, check for no change on the outputs
+vector='----10------111101------------------'
+# 2.4 Drive the AU Level Input inactive, check for no change on the outputs
+vector='----10------111111------------------'
+
+
+
 
 # Wiggle the Level Inputs, check for no change on the outputs
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
