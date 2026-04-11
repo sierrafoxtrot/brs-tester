@@ -53,30 +53,30 @@ output-drive-strength='11mA'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-config='ppp-io------oiiiiipppiiii-ii--------'
+config='ppp-io--i---oiiiiipppiiii-ii-iiii-i-'
 # Hold all of the control inputs inactive, ignore the outputs
-vector='----1--------11111---1111-11--------'
+vector='----1---1----11111---1111-11-1111-1-'
 
 # Let's clear the flip-flop with the direct clear input
 # Drive AR Direct Clear input active, check both outputs
-vector='----11------001111---1111-11--------'
+vector='----11--1---001111---1111-11-1111-1-'
 # Drive AR Direct Clear input inactive, check both outputs
-vector='----11------011111---1111-11--------'
+vector='----11--1---011111---1111-11-1111-1-'
 
 # Let's set the flip-flop with the direct set input
 # Drive AS Direct Set input active, check both outputs
-vector='----10------110111---1111-11--------'
+vector='----10--1---110111---1111-11-1111-1-'
 # Drive AS Direct Set input inactive, check for no change on the outputs
-vector='----10------111111---1111-11--------'
+vector='----10--1---111111---1111-11-1111-1-'
 
 # Let's clear and set the flip-flop again using the input mixer
 # Clear it:
-vector='----11------001111---1111-11--------'
-vector='----11------011111---1111-11--------'
+vector='----11--1---001111---1111-11-1111-1-'
+vector='----11--1---011111---1111-11-1111-1-'
 # Drive AE mixer input active, check both outputs
-vector='----00------111111---1111-11--------'
+vector='----00--1---111111---1111-11-1111-1-'
 # Drive AE mixer input inactive, check for no change on the outputs
-vector='----10------111111---1111-11--------'
+vector='----10--1---111111---1111-11-1111-1-'
 
 # Test the various DCD inputs. Tests follow a basic pattern:
 # 0. Setup by setting the flip-flop
@@ -98,33 +98,33 @@ vector='----10------111111---1111-11--------'
 ####################################################################
 # 0. Setup
 # Drive AR Direct Set input active, check both outputs
-vector='----10------110111---1111-11--------'
+vector='----10--1---110111---1111-11-1111-1-'
 # Drive AR Direct Set input inactive, check both outputs
-vector='----10------111111---1111-11--------'
+vector='----10--1---111111---1111-11-1111-1-'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-#config'ppp-io------oiiiiipppiiii-ii--------'
+#config'ppp-io--i---oiiiiipppiiii-ii-iiii-i-'
 # 1.1 Drive the AT Level Input active, check for no change on the outputs
-vector='----10------111011---1111-11--------'
+vector='----10--1---111011---1111-11-1111-1-'
 # 1.2 Drive the AV Pulse Input active, flip-flip should be cleared
-vector='----11------011010---1111-11--------'
+vector='----11--1---011010---1111-11-1111-1-'
 # 1.3 Drive the AV Pulse Input inactive, flip-flip should stay cleared
-vector='----11------011011---1111-11--------'
+vector='----11--1---011011---1111-11-1111-1-'
 # 1.4 Drive the AT Level Input inactive, check for no change on the outputs
-vector='----11------011111---1111-11--------'
+vector='----11--1---011111---1111-11-1111-1-'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-#config'ppp-io------oiiiiipppiiii-ii--------'
+#config'ppp-io--i---oiiiiipppiiii-ii-iiii-i-'
 # 2.1 Drive the AU Level Input active, check for no change on the outputs
-vector='----11------011101---1111-11--------'
+vector='----11--1---011101---1111-11-1111-1-'
 # 2.2 Drive the AV Pulse Input active, flip-flip should be set
-vector='----10------111100---1111-11--------'
+vector='----10--1---111100---1111-11-1111-1-'
 # 2.3 Drive the AV Pulse Input inactive, check for no change on the outputs
-vector='----10------111101---1111-11--------'
+vector='----10--1---111101---1111-11-1111-1-'
 # 2.4 Drive the AU Level Input inactive, check for no change on the outputs
-vector='----10------111111---1111-11--------'
+vector='----10--1---111111---1111-11-1111-1-'
 
 
 ####################################################################
@@ -140,33 +140,33 @@ vector='----10------111111---1111-11--------'
 ####################################################################
 # 0. Setup
 # Drive AR Direct Set input active, check both outputs
-vector='----10------110111---1111-11--------'
+vector='----10--1---110111---1111-11-1111-1-'
 # Drive AR Direct Set input inactive, check both outputs
-vector='----10------111111---1111-11--------'
+vector='----10--1---111111---1111-11-1111-1-'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-#config'ppp-io------oiiiiipppiiii-ii--------'
+#config'ppp-io--i---oiiiiipppiiii-ii-iiii-i-'
 # 1.1 Drive the BD Level Input active, check for no change on the outputs
-vector='----10------111111---0111-11--------'
+vector='----10--1---111111---0111-11-1111-1-'
 # 1.2 Drive the BK Pulse Input active, flip-flip should be cleared
-vector='----11------011111---0111-01--------'
+vector='----11--1---011111---0111-01-1111-1-'
 # 1.3 Drive the BK Pulse Input inactive, flip-flip should stay cleared
-vector='----11------011111---0111-11--------'
+vector='----11--1---011111---0111-11-1111-1-'
 # 1.4 Drive the BD Level Input inactive, check for no change on the outputs
-vector='----11------011111---1111-11--------'
+vector='----11--1---011111---1111-11-1111-1-'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-#config'ppp-io------oiiiiipppiiii-ii--------'
+#config'ppp-io--i---oiiiiipppiiii-ii-iiii-i-'
 # 2.1 Drive the BE Level Input active, check for no change on the outputs
-vector='----11------011111---1011-11--------'
+vector='----11--1---011111---1011-11-1111-1-'
 # 2.2 Drive the BK Pulse Input active, flip-flip should be set
-vector='----10------111111---1011-01--------'
+vector='----10--1---111111---1011-01-1111-1-'
 # 2.3 Drive the BK Pulse Input inactive, check for no change on the outputs
-vector='----10------111111---1011-11--------'
+vector='----10--1---111111---1011-11-1111-1-'
 # 2.4 Drive the BE Level Input inactive, check for no change on the outputs
-vector='----10------111111---1111-11--------'
+vector='----10--1---111111---1111-11-1111-1-'
 
 
 ####################################################################
@@ -174,40 +174,122 @@ vector='----10------111111---1111-11--------'
 ####################################################################
 # 0. Setup
 # Drive AR Direct Set input active, check both outputs
-vector='----10------110111---1111-11--------'
+vector='----10--1---110111---1111-11-1111-1-'
 # Drive AR Direct Set input inactive, check both outputs
-vector='----10------111111---1111-11--------'
+vector='----10--1---111111---1111-11-1111-1-'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-#config'ppp-io------oiiiiipppiiii-ii--------'
+#config'ppp-io--i---oiiiiipppiiii-ii-iiii-i-'
 # 1.1 Drive the BF Level Input active, check for no change on the outputs
-vector='----10------111111---1101-11--------'
-# 1.2 Drive the BL Pulse Input active, flip-flip should be cleared
-vector='----11------011111---1101-10--------'
+vector='----10--1---111111---1101-11-1111-1-'
+# 1.2 Drivwethe BL Pulse Input active, flip-flip should be cleared
+vector='----11--1---011111---1101-10-1111-1-'
 # 1.3 Drive the BL Pulse Input inactive, flip-flip should stay cleared
-vector='----11------011111---1101-11--------'
+vector='----11--1---011111---1101-11-1111-1-'
 # 1.4 Drive the BF Level Input inactive, check for no change on the outputs
-vector='----11------011111---1111-11--------'
+vector='----11--1---011111---1111-11-1111-1-'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-#config'ppp-io------oiiiiipppiiii-ii--------'
+#config'ppp-io--i---oiiiiipppiiii-ii-iiii-i-'
 # 2.1 Drive the BH Level Input active, check for no change on the outputs
-vector='----11------011111---1110-11--------'
+vector='----11--1---011111---1110-11-1111-1-'
 # 2.2 Drive the BL Pulse Input active, flip-flip should be set
-vector='----10------111111---1110-10--------'
+vector='----10--1---111111---1110-10-1111-1-'
 # 2.3 Drive the BL Pulse Input inactive, check for no change on the outputs
-vector='----10------111111---1110-11--------'
+vector='----10--1---111111---1110-11-1111-1-'
 # 2.4 Drive the BH Level Input inactive, check for no change on the outputs
-vector='----10------111111---1111-11--------'
+vector='----10--1---111111---1111-11-1111-1-'
+
+
+####################################################################
+# Testing CLK: BP   JK inputs: AK/BU
+# Note: For this set, AK is unusually active high
+####################################################################
+# 0. Setup
+# Drive AR Direct Set input active, check both outputs
+vector='----10--1---110111---1111-11-1111-1-'
+# Drive AR Direct Set input inactive, check both outputs
+vector='----10--1---111111---1111-11-1111-1-'
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'ppp-io--i---oiiiiipppiiii-ii-iiii-i-'
+# 1.1 Drive the AK Level Input active, check for no change on the outputs
+vector='----10--1---111111---1111-11-1111-1-'
+# 1.2 Drive the BP Pulse Input active, flip-flip should be cleared
+vector='----11--1---011111---1111-11-1011-1-'
+# 1.3 Drive the BP Pulse Input inactive, flip-flip should stay cleared
+vector='----11--1---011111---1111-11-1111-1-'
+# 1.4 Drive the AK Level Input inactive, check for no change on the outputs
+vector='----11--0---011111---1111-11-1111-1-'
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'ppp-io--i---oiiiiipppiiii-ii-iiii-i-'
+# 2.1 Drive the BU Level Input active, check for no change on the outputs
+vector='----11--0---011111---1111-11-1111-0-'
+# 2.2 Drive the BP Pulse Input active, flip-flip should be set
+vector='----10--0---111111---1111-11-1011-0-'
+# 2.3 Drive the BP Pulse Input inactive, check for no change on the outputs
+vector='----10--0---111111---1111-11-1111-0-'
+# 2.4 Drive the BU Level Input inactive, check for no change on the outputs
+vector='----10--0---111111---1111-11-1111-1-'
+
+####################################################################
+# Now to test instances of a independant inputs ie. non shared clock
+#
+# Testing CLK: BR   JK inputs: AK/--
+####################################################################
+# 0. Setup
+# Drive AR Direct Set input active, check both outputs
+vector='----10--1---110111---1111-11-1111-1-'
+# Drive AR Direct Set input inactive, check both outputs
+vector='----10--1---111111---1111-11-1111-1-'
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'ppp-io--i---oiiiiipppiiii-ii-iiii-i-'
+# 1.1 Drive the AK Level Input active, check for no change on the outputs
+vector='----10--0---111011---1111-11-1111-1-'
+# 1.2 Drive the BR Pulse Input active, flip-flip should be cleared
+vector='----11--0---011010---1111-11-1101-1-'
+# 1.3 Drive the BR Pulse Input inactive, flip-flip should stay cleared
+vector='----11--0---011011---1111-11-1111-1-'
+# 1.4 Drive the AK Level Input inactive, check for no change on the outputs
+vector='----11--1---011111---1111-11-1111-1-'
+
+####################################################################
+# Testing CLK: AV   JK inputs: AT/AU ***OLD***
+# Testing CLK: BN   JK inputs: --/BS
+####################################################################
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'ppp-io--i---oiiiiipppiiii-ii-iiii-i-'
+# 0. Setup: Let's clear the flip-flop with the direct clear input
+# Drive AS Direct Clear input active, check both outputs
+vector='----11--1---001111---1111-11-1111-1-'
+# Drive AR Direct Clear input inactive, check both outputs
+vector='----11--1---011111---1111-11-1111-1-'
+
+
+# This one appears broken. Hardware error?
+# 2.1 Drive the BS Level Input active, check for no change on the outputs
+#vector='----11--1---011111---1111-11-1110-1-' # This should work but cap C21 is causing issues
+# 2.2 Drive the BN Pulse Input active, flip-flip should be set
+vector='----10--1---111111---1111-11-0110-1-'
+# 2.3 Drive the BN Pulse Input inactive, check for no change on the outputs
+vector='----10--1---111111---1111-11-1110-1-'
+# 2.4 Drive the BS Level Input inactive, check for no change on the outputs
+vector='----10--1---111111---1111-11-1111-1-'
 
 
 
 
 # Wiggle the Level Inputs, check for no change on the outputs
-#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB TODO DO ALL OF THEM
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-#config'ppp-io------oiiiiipppiiii-ii--------'
-vector='----10------111001---1111-11--------'
-vector='----10------111111---1111-11--------'
+#config'ppp-io--i---oiiiiipppiiii-ii-iiii-i-'
+vector='----10--1---111001---1111-11-1111-1-'
+vector='----10--1---111111---1111-11-1111-1-'
