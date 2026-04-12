@@ -387,3 +387,27 @@ vector='---1101-1-0-111111---1111-111111111-'
 # Now wiggle level inputs randomly
 vector='---1101-1-0-111001---1111-111111111-'
 vector='---1101-1-0-111111---1111-111111111-'
+
+
+#             AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#             ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#             pppiioi-i-i-oiiiiipppiiii-iiiiiiiii-
+# Set all inputs to inactive and use direct set and clear to configure flip-flop
+# Drive AR Direct Set input active
+output-drive='---1101-1-1-110111---1111-111111111-'
+# Drive AR Direct Set input inactive and load the '1' output
+output-drive='---11L1-1-1--11111---1111-111111111-'
+
+# Drive AR Direct Clear input active
+output-drive='---1111-1-1--01111---1111-111111111-'
+# Drive AR Direct Clear input inactive and load the '0' output
+output-drive='---1111-1-1-L11111---1111-111111111-'
+
+# output-drives-strength defines how much current the outputs can sink.
+# This is a value is what the tester will load the output with.
+output-drive-strength='18mA'
+
+# Those two values will define the voltage drop over the transistor compared to ground. First
+# the nominal value and then a margin that defines how much the value could diff from that.
+output-voltage-high='-150mV'
+output-voltage-margin='100mV'
