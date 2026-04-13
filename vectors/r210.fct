@@ -4,6 +4,14 @@
 # The Flip-Flops will be in an unknown state until after step 2
 # All functions verified but the input current definitions may need adjustments
 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! DO NOT TEST THE R210 IN AN UNMODIFIED BRS-TESTER  !
+# ! PINS BA & BB ARE SIGNALS AND NOT +10/-15 RAILS    !
+# ! AT BEST, YOU'LL BLOW THE 10V FUSE.                !
+# ! FOR NOW, THIS DCD IS NOT TESTED.                  !
+# ! SEE DOCS SUGGESTED MODIFICATION                   !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 # flip-flop DCD pair 1 (used as RAL in PDP-8 accumulator)
 # AT and AU are the JK inputs
 # AV is the shared clock pulse input

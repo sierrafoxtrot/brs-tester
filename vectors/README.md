@@ -21,7 +21,7 @@ This table contains status of the different test vectors. A test vector should h
 |r111.fct     | I    |    |                                     |
 |r113.fct     | OK   |    |                                     |
 |r202.fct     | I    |    |                                     |
-|r210.fct     | I    |    |Majority of inputs done              |
+|r210.fct     | I    |    |Majority done. HARDWARE MOD NEEDED!  |
 |r123.fct     | OK   |    |                                     |
 |r650.fct     | OK   |    |                                     |
 |s107.fct     | OK   |    |                                     |
