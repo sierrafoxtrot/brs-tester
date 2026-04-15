@@ -28,10 +28,6 @@ input-current-high='-3.7mA'
 input-current-margin='3.5mA'
 input-voltage-low='-3700mV'
 input-voltage-high='-50mV'
-#
-# Define how much current the outputs can sink
-# 11mA on the 0 Output and 13mA on the 1 Output
-output-drive-strength='11mA'
 
 # The 'config' key describes how the tested board has it connections.
 #
@@ -91,3 +87,25 @@ vector='---111011111110111------------------'
 # Wiggle the Level Inputs, check for no change on the outputs
 vector='---101011011010110------------------'
 vector='---111011111110111------------------'
+
+
+
+#             AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#             ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#     config='pppiiiooiiiiiiooii------------------'
+# Drive F & R Direct Clear inputs active, check both '1'outputs
+output-drive='---110-L111110--11------------------'
+output-drive='---110--111110-L11------------------'
+
+# Drive M Direct Set input active, check both '0'outputs
+output-drive='---111L-110111--11------------------'
+output-drive='---111--110111L-11------------------'
+
+# output-drives-strength defines how much current the outputs can sink.
+# This is a value is what the tester will load the output with.
+output-drive-strength='11mA'
+
+# Those two values will define the voltage drop over the transistor compared to ground. First
+# the nominal value and then a margin that defines how much the value could diff from that.
+output-voltage-high='-150mV'
+output-voltage-margin='100mV'
