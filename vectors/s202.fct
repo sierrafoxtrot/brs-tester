@@ -23,9 +23,9 @@
 # -3V = 1
 # 0V = 0
 # Define the limits when testing inputs
-input-current-low='-3.0mA'
-input-current-high='-1.7mA'
-input-current-margin='31.0mA'
+input-current-low='-1.0mA'
+input-current-high='-3.7mA'
+input-current-margin='3.5mA'
 input-voltage-low='-3700mV'
 input-voltage-high='-50mV'
 #
