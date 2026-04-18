@@ -43,7 +43,7 @@ input-current-low='-1.0mA'
 input-current-high='-11.0mA'
 input-current-margin='11.0mA'
 input-voltage-low='-3700mV'
-input-voltage-high='-50mV'
+input-voltage-high='-100mV'
 
 #
 # Define how much current the outputs can sink
