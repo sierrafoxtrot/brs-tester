@@ -1,0 +1,77 @@
+# Test for B130, Three bit parity circuit
+# This circuit is essentially a set of AND gates all OR'd together
+#
+# DCD inputs for Clear Set
+# A logic 1 = -3V and a logic 0 = 0V
+# All functions verified but the input current definitions may need adjustments
+
+# . == logical AND
+# + == logical OR
+# / == logical NOT
+
+# D = (V . U . T) + (S . R . P) + (N . M . L) + (K . J . H)
+# E = /D
+# F = D
+
+# Define the limits when testing inputs
+input-current-low='-2.7mA'
+input-current-high='-1.7mA'
+input-current-margin='3.0mA'
+input-voltage-low='-3700mV'
+input-voltage-high='-50mV'
+
+
+# The 'config' key describes how the tested board has it connections.
+#
+# 'p' - power pin, do nothing
+# 'i' - input pin on tested board
+# 'o' - output pin on tested board
+# 'O' - output pin on tested board, open collector
+# 'd' - pull down net on tested board
+# 'g' - pin should be grounded on tested board
+# '-' - pin should not be used, don't care and it will be electrically disconnected
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+config='pppoooiiiiiiiiiiii------------------'
+# Cycle through the combination of inputs
+vector='---101111111111111------------------'
+
+# Walking 1's on the large OR gate
+vector='---101111000000000------------------'
+vector='---101000111000000------------------'
+vector='---101000000111000------------------'
+vector='---101000000000111------------------'
+
+# Walking 0's (simultaneously on the AND gates)
+vector='---010011011011011------------------'
+vector='---010101101101101------------------'
+vector='---010110110110110------------------'
+
+
+vector='---010100100100100------------------'
+vector='---101111111111111------------------'
+vector='---101111111111111------------------'
+vector='---101111111111111------------------'
+
+
+#             CCCCCCCCCCCCCCCCCCDDDDDDDDDDDDDDDDDD
+#             ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#     config='pppoooiiiiiiiiiiii------------------'
+# Drive E to GND
+output-drive='----L-111111111111------------------'
+
+# Drive D & F to GND
+output-drive='---L--011011011011------------------'
+# Let's skip F as it will not pull low with the inbuilt 1k5 resistor
+#output-drive='-----L011011011011------------------'
+
+
+# output-drives-strength defines how much current the outputs can sink.
+# This is a value is what the tester will load the output with.
+output-drive-strength='10mA'
+
+# Those two values will define the voltage drop over the transistor compared to ground. First
+# the nominal value and then a margin that defines how much the value could diff from that.
+output-voltage-high='-150mV'
+output-voltage-margin='100mV'
