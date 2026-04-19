@@ -1,0 +1,60 @@
+# Test for R603 Triple Pulse Amplifier
+# Diode and DCD inputs
+# A logic 1 = -3V and a logic 0 = 0V
+
+# -3V = 1
+# 0V = 0
+# Define the limits when testing inputs
+input-current-low='-1.0mA'
+input-current-high='-3.7mA'
+input-current-margin='3.5mA'
+input-voltage-low='-3700mV'
+input-voltage-high='-50mV'
+
+# PA 1
+# P Diode input
+# K DCD Edge input
+# L DCD Level input
+# M Output
+
+# The 'config' key describes how the tested board has it connections.
+#
+# 'p' - power pin, do nothing
+# 'i' - input pin on tested board
+# 'o' - output pin on tested board
+# 'O' - output pin on tested board, open collector
+# 'd' - pull down net on tested board
+# 'g' - pin should be grounded on tested board
+# '-' - pin should not be used, don't care and it will be electrically disconnected
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+config='ppp-----iio-i-----------------------'
+# Test diode input
+vector='--------111-1-----------------------'
+vector='--------111-1-----------------------'
+vector='--------110-0-----------------------'
+vector='--------110-0-----------------------'
+
+# Test DCD input
+vector='--------101-0-----------------------'
+vector='--------001-0-----------------------'
+
+
+#             AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#             ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#      config'pppoooooiiioiiiioi------------------'
+# Drive K Direct Clear input active, check '1' outputs U, H & D
+#output-drive='--------011-1111L1------------------'
+#output-drive='------L-011-1111-1------------------'
+#output-drive='---L----011-1111-1------------------'
+
+
+# output-drives-strength defines how much current the outputs can sink.
+# This is a value is what the tester will load the output with.
+output-drive-strength='6mA'
+
+# Those two values will define the voltage drop over the transistor compared to ground. First
+# the nominal value and then a margin that defines how much the value could diff from that.
+output-voltage-high='-150mV'
+output-voltage-margin='200mV'
