@@ -27,18 +27,29 @@ input-voltage-high='-50mV'
 # 'g' - pin should be grounded on tested board
 # '-' - pin should not be used, don't care and it will be electrically disconnected
 
+# Pulse amplifiers generate a fixed width "standard" pulse 100nS wide. This is much too
+# fast to capture by polling the input. Instead, using the following command, the pulses
+# can be captured on an oscilloscope to confirm the pulse is correct.
+#
+#    make && ./brs-tester debug --enable-power=on --pin="AJ" --pin-state="T" \
+#    --iterations=10
+#
+# This can be used to trigger the AJ, AP and AV inputs measuring the output on the
+# AF, AM, AT outputs respectively.
+
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
 config='pppiio-iiio-iiio-i------------------'
 # Test diode input
+vector='---11--111--111--1------------------'
 vector='---111-1111-1111-1------------------'
-vector='---111-1111-1111-1------------------'
-vector='---110-0110-0110-0------------------'
+vector='---110-0110-T110-0------------------'
 vector='---110-1110-1110-1------------------'
 
 # Test DCD input
 vector='---101-1101-1101-1------------------'
 vector='---001-1001-1001-1------------------'
+vector='---101-1101-1101-1------------------'
 
 
 #             AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
