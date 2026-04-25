@@ -18,7 +18,7 @@ This table contains status of the different test vectors. A test vector should h
 |g219.fct     | I    |    |Need sw and hw for testing           |
 |r107.fct     | OK   |    |                                     |
 |r111.fct     | I    |    |                                     |
-|r113.fct     | I    |    |                                     |
+|r113.fct     | OK   |    |                                     |
 |r202.fct     | I    |    |                                     |
 |r123.fct     | OK   |    |                                     |
 |r650.fct     | OK   |    |                                     |
