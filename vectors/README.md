@@ -6,6 +6,7 @@ This table contains status of the different test vectors. A test vector should h
 |template.fct | OK   |    |This is the template                 |
 |b104.fct     | OK   |    |                                     |
 |b105.fct     | I    |    |                                     |
+|b130.fct     | OK   |    |                                     |
 |b132.fct     | I    |    |                                     |
 |b133.fct     | OK   |    |                                     |
 |b134.fct     | OK   |    |                                     |
