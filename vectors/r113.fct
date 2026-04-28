@@ -1,10 +1,11 @@
 # Test for R113, NAND/NOR Gate
 
 # Define the limits when testing inputs
-input-current='-1.0mA'
+input-current-high='0.0mA'
+input-current-low='1.0mA'
 input-current-margin='1.0mA'
-input-active-level='high'
-input-logic-high='-300mV'
+input-voltage-low='-3700mV'
+input-voltage-high='-30mV'
 
 # Define the limits when testing the clamped load resistors
 load-low='-3700mV'
@@ -14,11 +15,9 @@ load-high-margin='100mV'
 load-current='-20mA'
 load-current-margin='5mA'
 
-# Define how much current the outputs can sink
-output-drive-strength='18mA'
 
-# The 'config' key describes how the tested board has it connections. 
-# 
+# The 'config' key describes how the tested board has it connections.
+#
 # 'p' - power pin, do nothing
 # 'i' - input pin on tested board
 # 'o' - output pin on tested board
@@ -30,14 +29,44 @@ output-drive-strength='18mA'
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
 config='pppiioiioiioiioiio------------------'
-vector='-----1--1--1--1--1------------------'
-vector='---001--1--1--1--1------------------'
-vector='---011--1--1--1--1------------------'
-vector='---101--1--1--1--1------------------'
-vector='---110--1--1--1--1------------------'
-vector='-----1001--1--1--1------------------'
-vector='-----1011--1--1--1------------------'
-vector='-----1101--1--1--1------------------'
-vector='-----1110--1--1--1------------------'
+#ector='-----1--1--1--1--1------------------'
+vector='---001001001001001------------------'
+vector='---011001001001001------------------'
+vector='---101001001001001------------------'
+vector='---110001001001001------------------'
+
+vector='---001001001001001------------------'
+vector='---001011001001001------------------'
+vector='---001101001001001------------------'
+vector='---001110001001001------------------'
+
+vector='---001001001001001------------------'
+vector='---001001011001001------------------'
+vector='---001001101001001------------------'
+vector='---001001110001001------------------'
+
+vector='---001001001001001------------------'
+vector='---001001001011001------------------'
+vector='---001001001101001------------------'
+vector='---001001001110001------------------'
+
+vector='---001001001001001------------------'
+vector='---001001001001011------------------'
+vector='---001001001001101------------------'
+vector='---001001001001110------------------'
+
 vector='---110110110110110------------------'
 
+# Define how much current the outputs can sink
+output-drive-strength='18mA'
+output-voltage-high='-100mV'
+output-voltage-margin='100mV'
+
+#             CCCCCCCCCCCCCCCCCCDDDDDDDDDDDDDDDDDD
+#             ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#     config='pppiioiioiioiioiio------------------'
+output-drive='---11L------------------------------'
+output-drive='------11L---------------------------'
+output-drive='---------11L------------------------'
+output-drive='------------11L---------------------'
+output-drive='---------------11L------------------'
