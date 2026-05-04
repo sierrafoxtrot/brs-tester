@@ -111,12 +111,6 @@ output-drive='---1-1--1-01-1--1-------------------'
 output-drive='---1-1L-1-01-1--1-------------------'
 output-drive='---1-1--1-01-1L-1-------------------'
 
-#
-
-# output-drive='--------011-1111L1------------------'
-# output-drive='------L-011-1111-1------------------'
-# output-drive='---L----011-1111-1------------------'
-
 # Those two values will define the voltage drop over the transistor compared to ground. First
 # the nominal value and then a margin that defines how much the value could diff from that.
 output-voltage-high='-150mV'
