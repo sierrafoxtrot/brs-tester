@@ -1,0 +1,138 @@
+# Test for R202, Dual Flip-Flop with Direct Clear,
+# A logic 1 = -3V and a logic 0 = 0V
+
+# flip-flop 1
+#
+# Clear DCD Input:    Level: L | Pulse: D
+# Set   DCD Input(1): Level: K | Pulse: D
+# Set   DCD Input(2): Level: H | Pulse: M
+# E and J are the '0' and '1' outputs respectively
+#
+# flip-flop 2
+#
+# Clear DCD Input:    Level: U | Pulse: N
+# Set   DCD Input(1): Level: T | Pulse: N
+# Set   DCD Input(2): Level: S | Pulse: V
+# R and P are the '0' and '1' outputs respectively
+#
+#
+# Both flip-flops
+# F is the direct clear input
+
+# -3V = 1
+# 0V = 0
+# Define the limits when testing inputs
+input-current-low='0.5mA'
+input-current-high='-3.0mA'
+input-current-margin='3.0mA'
+input-voltage-low='-3700mV'
+input-voltage-high='-50mV'
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+config='pppioiioiiiiooiiii------------------'
+# Hold all of the control inputs inactive, ignore the outputs
+vector='---1-11-1111--1111------------------'
+# Drive F Direct Clear input active, check both outputs
+vector='---110101111011111------------------'
+# Drive F Direct Clear input inactive, check for no change on the outputs
+vector='---111101111011111------------------'
+
+# Set FF1 via DCD(1)
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'pppioiioiiiiooiiii------------------'
+# Drive DCD(1) level input active
+vector='---111101111--1111------------------'
+# Set level input K active
+vector='---111100111--1111------------------'
+# Set pulse input D active
+vector='---001110111--1111------------------'
+# Set pulse input D inactive
+vector='---101110111--1111------------------'
+# Set level input K active
+vector='---101111111--1111------------------'
+
+# Set FF2 via DCD(1)
+# Drive DCD(1) level input active
+vector='---1-11-1111011111------------------'
+# Set level input T active
+vector='---1-11-1111011011------------------'
+# Set pulse input N active
+vector='---1-11-1110101011------------------'
+# Set pulse input N inactive
+vector='---1-11-1111101011------------------'
+# Set level input T active
+vector='---1-11-1111101111------------------'
+
+# Clear FF1 via DCD
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'pppioiioiiiiooiiii------------------'
+# Set level input L active
+vector='---101111011--1111------------------'
+# Set pulse input D active
+vector='---011101011--1111------------------'
+# Set pulse input D inactive
+vector='---111101011--1111------------------'
+# Set level input L active
+vector='---111101111--1111------------------'
+
+# Clear FF2 via DCD
+# Set level input U active
+vector='---1-11-1111101101------------------'
+# Set pulse input N active
+vector='---1-11-1110011101------------------'
+# Set pulse input N inactive
+vector='---1-11-1111011101------------------'
+# Set level input U active
+vector='---1-11-1111011111------------------'
+
+# Set FF1 via DCD(2)
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'pppioiioiiiiooiiii------------------'
+# Set level input H active
+vector='---111001111--1111------------------'
+# Set pulse input M active
+vector='---101011101--1111------------------'
+# Set pulse input M inactive
+vector='---101011111--1111------------------'
+# Set level input H active
+vector='---101111111--1111------------------'
+
+# Set FF2 via DCD(1)
+# Set level input S active
+vector='---1-11-1111010111------------------'
+# Set pulse input V active
+vector='---1-11-1111100110------------------'
+# Set pulse input N inactive
+vector='---1-11-1111100111------------------'
+# Set level input T active
+vector='---1-11-1111101111------------------'
+
+#             AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#             ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#      config'pppioiioiiiiooiiii------------------'
+# FF1 & FF2 are both set from tests (above) test '0' outputs E & R
+output-drive='---1-11-1111--1111------------------'
+output-drive='---1L11-1111--1111------------------'
+output-drive='---1-11-1111-L1111------------------'
+
+# Drive F Direct Clear input active, check both outputs
+output-drive='---1-01-1111--1111------------------'
+# Drive F Direct Clear input inactive, check for no change on the outputs
+output-drive='---1-11-1111--1111------------------'
+# Now load the '1' outputs J & P
+output-drive='---1-11L1111--1111------------------'
+output-drive='---1-11-1111L-1111------------------'
+
+#
+# Define how much current the outputs can sink
+# TODO: Load tests fail > 1mA
+output-drive-strength='8mA'
+
+# Those two values will define the voltage drop over the transistor compared to ground. First
+# the nominal value and then a margin that defines how much the value could diff from that.
+output-voltage-high='-150mV'
+output-voltage-margin='100mV'
