@@ -1,0 +1,49 @@
+# Test for W607 Pulse Output Converters
+#
+# A logic 1 = -3V and a logic 0 = 0V
+
+# -3V = 1
+# 0V = 0
+# Define the limits when testing inputs
+input-current-low='-1.0mA'
+input-current-high='-12.5mA'
+input-current-margin='10mA'
+input-voltage-low='-3700mV'
+input-voltage-high='-150mV'
+
+# Pulse Amplifier can be driven by either the delay line (above) or dedicated input
+# Test output value by connecting an oscilloscope
+# PA | Inputs   | -ve Output  | +ve Outputs |
+# ---+----------+-------------+-------------+
+#  1 |  D, E    |  H          |  F, J       |
+#  2 |  K, L    |  N          |  M, P       |
+#  3 |  R, S    |  U          |  T, V       |
+#
+# Inputs are duplicated on PCB immediately at the edge connector.
+# Outputs are Pulse transformer isolated (left unconfigured below)
+
+# Pulse amplifiers generate a fixed width "standard" pulse 100nS wide. This is much too
+# fast to capture by polling the input. Instead, each of the pulse outputs is toggled
+# multiple times and triggered by first the diode input and then the DCD input.
+# The pulses can be captured on an oscilloscope to confirm the pulse is correct.
+
+toggles='15000'
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+config='pppi----i----i----------------------'
+# Drive PA#1 input with a pulse train
+vector='---T----1----1----------------------'
+# Drive PA#2 input with a pulse train
+vector='---1----T----1----------------------'
+# Drive PA#3 input with a pulse train
+vector='---1----1----T----------------------'
+
+# output-drives-strength defines how much current the outputs can sink.
+# This is a value is what the tester will load the output with.
+output-drive-strength='10mA'
+
+# Those two values will define the voltage drop over the transistor compared to ground. First
+# the nominal value and then a margin that defines how much the value could diff from that.
+output-voltage-high='-150mV'
+output-voltage-margin='100mV'
