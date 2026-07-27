@@ -49,6 +49,7 @@ This table contains status of the different test vectors. A test vector should h
 |w300.fct     | OK   |    |                                     |
 |w501.fct     | OK   |    |                                     |
 |w607.fct     | OK   |    |                                     |
+|w612.fct     | OK   |    |                                     |
 |w640.fct     | OK   |    |                                     |
 
 |Status |Description                    |
