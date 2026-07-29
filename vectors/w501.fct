@@ -1,0 +1,52 @@
+# W501 - Schmitt Trigger
+
+# The 'config' key describes how the tested board has it connections.
+#
+# 'p' - power pin, do nothing
+# 'i' - input pin on tested board
+# 'o' - output pin on tested board
+# 'O' - output pin on tested board, open collector
+# 'd' - pull down net on tested board
+# 'g' - pin should be grounded on tested board
+# '-' - pin should not be used, don't care and it will be electrically disconnected
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+config='ppp--O-------i----------------------'
+vector='-----1-------0----------------------'
+vector='-----0-------1----------------------'
+vector='-----1-------0----------------------'
+vector='-----0-------1----------------------'
+
+# load-* keys are used to define limit values for tests of load networks
+# present on some boards. Used when the 'd' operator is found in the config string.
+load-low='-3700mV'
+load-low-margin='200mV'
+load-high='-50mV'
+load-high-margin='100mV'
+load-current='-10mA'
+load-current-margin='1mA'
+
+# input-* keys defined limits when testing inputs
+input-current-margin='2mA'
+
+# For a digital '0'
+input-voltage-high='-10mV'
+input-current-high='-0mA'
+
+# For a digital '1'
+input-voltage-low='-3700mV'
+input-current-low='0mA'
+
+# Number of times a pin should toggle when the 'T' function is used in the vector string.
+toggles='1000000'
+
+# output-drives-strength defines how much current the outputs can sink. This is
+# a value is what the tester will load the output with.
+output-drive-strength='26mA'
+
+# Those two values will define the voltage drop over the transistor compared top ground. First
+# the nominal value and then a margin that defines how much the value could diff from that.
+# In this example the drop might be ok if it in between 0 .. -300mV. -150 mV +/-150mV
+output-voltage-high='-150mV'
+output-voltage-margin='150mV'
