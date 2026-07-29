@@ -1,0 +1,88 @@
+# R302 - Delay (One Shot)
+#
+# Minor modification to the tester is required for correct operation.
+# For the device under test short the following pins
+# AJ - AK (to use internal potentiometer on One-Shot #1)
+# AS - AT (to use internal potentiometer on One-Shot #2)
+#
+# These pins can be easily bridged on the daisy chain 2x20 headers on
+# the connector PCB. While toggling, the timing resistor can be adjusted
+# to ensure that the full range is achieved.
+#
+# The 'config' key describes how the tested board has it connections.
+#
+# 'p' - power pin, do nothing
+# 'i' - input pin on tested board
+# 'o' - output pin on tested board
+# 'O' - output pin on tested board, open collector
+# 'd' - pull down net on tested board
+# 'g' - pin should be grounded on tested board
+# '-' - pin should not be used, don't care and it will be electrically disconnected
+
+# One-Shots generate a fixed variable width pulse set by internal or external RC timing
+# components. These are much too fast to capture by polling the input.
+# Instead, each pulse output is toggled multiple times and triggered by it's DCD input.
+# The pulses can be captured on an oscilloscope to verify operation.
+
+# Number of times a pin should toggle when the 'T' function is used in the vector string.
+toggles='10000'
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+config='ppp-ii----oii----o------------------'
+
+#
+# One-Shot #1
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#       ppp-ii----oii----o------------------
+vector='----11----011-----------------------'
+vector='----10----011-----------------------'
+vector='----T0-----11-----------------------'
+vector='----10----011-----------------------'
+vector='----11----011-----------------------'
+
+# One-Shot #2
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#       ppp-ii----oii----o------------------
+vector='----11-----11----0------------------'
+vector='----11-----10----0------------------'
+vector='----11-----T0-----------------------'
+vector='----11-----10----0------------------'
+vector='----11-----11----0------------------'
+
+# load-* keys are used to define limit values for tests of load networks
+# present on some boards. Used when the 'd' operator is found in the config string.
+load-low='-3700mV'
+load-low-margin='200mV'
+load-high='-50mV'
+load-high-margin='100mV'
+load-current='-10mA'
+load-current-margin='0.2mA'
+
+#             AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#             ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#             ppp-ii----oii----o------------------
+output-drive='----00----L00-----------------------'
+output-drive='----00-----00----L------------------'
+
+# input-* keys defined limits when testing inputs
+input-current-margin='2.5mA'
+
+# For a digital '0'
+input-voltage-high='-10mV'
+input-current-high='-5.0mA'
+
+# For a digital '1'
+input-voltage-low='-3700mV'
+input-current-low='0mA'
+
+# output-drives-strength defines how much current the outputs can sink.
+# This is a value is what the tester will load the output with.
+output-drive-strength='18mA'
+
+# Those two values will define the voltage drop over the transistor compared to ground. First
+# the nominal value and then a margin that defines how much the value could diff from that.
+output-voltage-high='-150mV'
+output-voltage-margin='150mV'
