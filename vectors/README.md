@@ -24,24 +24,23 @@ This table contains status of the different test vectors. A test vector should h
 |r107.fct     | OK   |    |                                     |
 |r111.fct     | I    |    |                                     |
 |r113.fct     | OK   |    |                                     |
-|r202.fct     | I    |    |                                     |
 |r123.fct     | OK   |    |                                     |
+|r202.fct     | OK   |    |                                     |
+|r203.fct     | I    |    |                                     |
 |r210.fct     | OK   |    |Hardware mod needed. Details in file |
 |r211.fct     | OK   |    |                                     |
 |r302.fct     | OK   |    |                                     |
+|r450.fct     | OK   |    |                                     |
 |r613.fct     | OK   |    |                                     |
 |r650.fct     | OK   |    |                                     |
 |s107.fct     | OK   |    |                                     |
 |s111.fct     | OK   |    |                                     |
-|r203.fct     | I    |    |                                     |
-|r202.fct     | OK   |    |                                     |
-|r450.fct     | OK   |    |                                     |
+|s151.fct     | OK   |    |                                     |
+|s181.fct     | OK   |    |                                     |
 |s203.fct     | I    |    |                                     |
 |s205.fct     | I    |    |                                     |
 |s206.fct     | I    |    |                                     |
 |s220.fct     | I    |    |Needs '0' output load tests          |
-|s151.fct     | OK   |    |                                     |
-|s181.fct     | OK   |    |                                     |
 |s602.fct     | I    |    |Need hw for pulse measurement        |
 |s603.fct     | I    |    |Need hw for pulse measurement        |
 |w005.fct     | OK   |    |                                     |
