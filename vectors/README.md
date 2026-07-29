@@ -17,6 +17,7 @@ This table contains status of the different test vectors. A test vector should h
 |b169.fct     | OK   |    |                                     |
 |b204.fct     | I    |    |Test resistor inputs                 |
 |b213.fct     | I    |    |Need sw support for pulse            |
+|g208.fct     | OK   |    |Hardware mod needed. Details in file |
 |g209.fct     | I    |    |Need sw and hw for testing           |
 |g219.fct     | I    |    |Need sw and hw for testing           |
 |r107.fct     | OK   |    |                                     |

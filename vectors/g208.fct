@@ -1,0 +1,75 @@
+# Test for G208, Inhibit Driver.
+#
+# Add-on board is needed, manual test procedure below.
+#
+# NAND Inputs: AT/AU
+# Out: Inhibit loop AR/AP
+#      Current determining resistor: AN/AS
+#
+# NAND Inputs: AD/AU
+# Out: Inhibit loop AF/AH
+#      Current determining resistor: AJ/AE
+#
+# The 'config' key describes how the tested board has it connections.
+#
+# 'p' - power pin, do nothing
+# 'i' - input pin on tested board
+# 'o' - output pin on tested board
+# 'O' - output pin on tested board, open collector
+# 'd' - pull down net on tested board
+# 'g' - pin should be grounded on tested board
+# '-' - pin should not be used, don't care and it will be electrically disconnected
+
+#
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+config='pppi-----------ii-ppp---------------'
+# Test MB0 inhibit line (output AR/AP). Measure at AS vs Inh-
+vector='---0-----------1T-------------------'
+# Test MB0 inhibit line (output AF/AH). Measure at AE vs Inh-
+vector='---1-----------0T-------------------'
+
+input-current-low='-0.0mA'
+input-current-high='-2.0mA'
+input-current-margin='1.5mA'
+input-voltage-high='-10mV'
+input-voltage-low='-3700mV'
+toggles='100000'
+
+
+####################################################################################
+#
+# Test Jig Instructions & Usage
+# Making a load board for testing adapter for testing pin DA
+# This setup gives an approximation of the inhibit current setup in which a G208
+# operates. A resistor sets the current in conjunction with a DC supply.
+# Inspect the core module for the required inhibit current. It will be approx. 300mA
+# The nominal inhibit supply in the PDP-8 is 37VDC.
+# Choose a combination of resistor and supply voltage to achieve something close
+# to the required inhibit current.
+#
+# The simplest way to construct is with a spare connector PCB.
+#
+# Fit the two 40 pin headers for connector A
+#
+# Connect the following (unshielded wire to allow oscilloscope to be hooked on)
+# These are taking the place of the inhibit loop.
+# AE - AH
+# AP - AR
+#
+# Connect 100R 5W resistors between. These are the current determining resistors.
+# They'll carry a large current but only for a brief pulse. Lower wattage may work.
+# AE - AJ
+# AN - AS
+#
+# Two flying leads to connect the inhibit supply. Use an (ideally) isolated bench/lab
+# supply set to approx 30V.
+# AK - Red   (supply +ve)
+# AL - Black (supply -ve)
+#
+# Use and additional (short!) ribbon cable to place the modified connector board in-line
+# between the actual edge connector and the brs-tester.
+#
+# On an oscilloscope, trigger off AU and measure AF(ch1) AP(ch2) for the inhibit pulse.
+#
+####################################################################################
