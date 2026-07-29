@@ -1,0 +1,53 @@
+# Test for R450 Variable Clock
+#
+# A logic 1 = -3V and a logic 0 = 0V
+
+# Define the limits when testing inputs
+input-current-low='-1.0mA'
+input-current-high='-1.5mA'
+input-current-margin='10mA'
+input-voltage-low='-3700mV'
+input-voltage-high='-50mV'
+
+# This flip-chip features two variable (adjustable) clocks and
+# a pulse amplifier. Connect H & D to test 400nS Pulse timing cap.
+#
+# Test output values by connecting an oscilloscope
+#
+# CLK | Enable   | Clock Out |
+# ----+----------+-----------+
+#  1  |  J       |  K        |
+#  2  |  R       |  S        |
+#
+# Pulse Amplifier has diode and DCD inputs
+# Diode Input: F
+# DCD Level Input: M    Pulse Input: L
+# Output: E
+# The intermediate stage is exposed as an output to aid debugging.
+# Outputs are Pulse transformer isolated (left unconfigured below)
+
+# Pulse amplifiers generate a fixed width "standard" pulse 100nS wide. This is much too
+# fast to capture by polling the input. Instead, each of the pulse outputs is toggled
+# multiple times and triggered by first the diode input and then the DCD input.
+# The pulses can be captured on an oscilloscope to confirm the pulse is correct.
+
+toggles='5000'
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+config='ppp-o--ioii--io---------------------'
+# Assert level input. Disable both clocks
+vector='-------0-10--0----------------------'
+# Toggle the pulse input to observe pulse train. Enable both clocks
+vector='-------1-T0--1----------------------'
+# Deasert Pulse and level input and disable clocks
+vector='-------0-11--0----------------------'
+
+# output-drives-strength defines how much current the outputs can sink.
+# This is a value is what the tester will load the output with.
+output-drive-strength='10mA'
+
+# Those two values will define the voltage drop over the transistor compared to ground. First
+# the nominal value and then a margin that defines how much the value could diff from that.
+output-voltage-high='-150mV'
+output-voltage-margin='100mV'
