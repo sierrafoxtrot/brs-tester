@@ -26,6 +26,7 @@ This table contains status of the different test vectors. A test vector should h
 |r123.fct     | OK   |    |                                     |
 |r210.fct     | OK   |    |Hardware mod needed. Details in file |
 |r211.fct     | OK   |    |                                     |
+|r302.fct     | OK   |    |                                     |
 |r650.fct     | OK   |    |                                     |
 |s107.fct     | OK   |    |                                     |
 |s111.fct     | OK   |    |                                     |
