@@ -1,0 +1,130 @@
+# Test for R613 Triple Pulse Amplifier
+# Diode and DCD inputs
+# A logic 1 = -3V and a logic 0 = 0V
+
+# -3V = 1
+# 0V = 0
+# Define the limits when testing inputs
+input-current-low='-1.0mA'
+input-current-high='-3.7mA'
+input-current-margin='3.5mA'
+input-voltage-low='-3700mV'
+input-voltage-high='-50mV'
+
+# PA 1
+# J Diode input
+# D DCD Edge input
+# E DCD Level input
+# F Output
+
+# PA 2
+# P Diode input
+# K DCD Edge input
+# L DCD Level input
+# M Output
+
+# PA 3
+# V Diode input
+# R DCD Edge input
+# S DCD Level input
+# T Output
+
+# The 'config' key describes how the tested board has it connections.
+#
+# 'p' - power pin, do nothing
+# 'i' - input pin on tested board
+# 'o' - output pin on tested board
+# 'O' - output pin on tested board, open collector
+# 'd' - pull down net on tested board
+# 'g' - pin should be grounded on tested board
+# '-' - pin should not be used, don't care and it will be electrically disconnected
+
+# Pulse amplifiers generate a fixed width "standard R-Series" pulse 200nS wide. This is much
+# too fast to capture by polling the input. Instead, each of the pulse outputs is toggled
+# multiple times and triggered by the DCD input.
+#
+# The pulses can be captured on an oscilloscope to confirm the pulse is correct.
+#
+# When driven by the diode input, the PA will stay at ground level for 200nS or for
+# as long as the diode input is held at ground. Due to the limited speed that we can drive
+# inputs, the observed correct behaviour will be for the PA output to track the diode input.
+#
+# This "tracking" behaviour is also used to load test the output.
+
+toggles='5000'
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+config='pppiiogiiiogiiiogi------------------'
+# Test PA 1 Diode input. As noted above, output will track input.
+vector='---111-1111-1111-1------------------'
+vector='---110-0111-1111-1------------------'
+vector='---111-1111-1111-1------------------'
+vector='---110-0111-1111-1------------------'
+vector='---111-1111-1111-1------------------'
+
+# Test PA 1 DCD input
+# Set the level input to active '0'
+vector='---101-1111-1111-1------------------'
+# Toggle the pulse input and observe the pulse on an oscilloscope
+# Ignore the output here as it's much too fast for polling on the ADC
+vector='---T0--1111-1111-1------------------'
+# Reset everything to inactive
+vector='---111-1111-1111-1------------------'
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'pppiiogiiiogiiiogi------------------'
+# Test PA 2 Diode input. As noted above, output will track input.
+vector='---111-1111-1111-1------------------'
+vector='---111-1110-0111-1------------------'
+vector='---111-1111-1111-1------------------'
+vector='---111-1110-0111-1------------------'
+vector='---111-1111-1111-1------------------'
+
+# Test PA 2 DCD input
+# Set the level input to active '0'
+vector='---111-1101-1111-1------------------'
+# Toggle the pulse input and observe the pulse on an oscilloscope
+# Ignore the output here as it's much too fast for polling on the ADC
+vector='---111-1T0--1111-1------------------'
+# Reset everything to inactive
+vector='---111-1111-1111-1------------------'
+
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'pppiiogiiiogiiiogi------------------'
+# Test PA 3 Diode input. As noted above, output will track input.
+vector='---111-1111-1111-1------------------'
+vector='---111-1111-1110-0------------------'
+vector='---111-1111-1111-1------------------'
+vector='---111-1111-1110-0------------------'
+vector='---111-1111-1111-1------------------'
+
+# Test PA 3 DCD input
+# Set the level input to active '0'
+vector='---111-1111-1101-1------------------'
+# Toggle the pulse input and observe the pulse on an oscilloscope
+# Ignore the output here as it's much too fast for polling on the ADC
+vector='---111-1111-1T0--1------------------'
+# Reset everything to inactive
+vector='---111-1111-1111-1------------------'
+
+#             AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#             ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#            'pppiiogiiiogiiiogi------------------'
+output-drive='---11--111--111--1------------------'
+output-drive='---11L-0111-1111-1------------------'
+output-drive='---11--011L-0111-1------------------'
+output-drive='---11--0111-111L-0------------------'
+
+
+# output-drives-strength defines how much current the outputs can sink.
+# This is a value is what the tester will load the output with.
+output-drive-strength='65mA'
+
+# Those two values will define the voltage drop over the transistor compared to ground. First
+# the nominal value and then a margin that defines how much the value could diff from that.
+output-voltage-high='-150mV'
+output-voltage-margin='200mV'
