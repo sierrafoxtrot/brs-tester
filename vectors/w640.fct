@@ -1,0 +1,54 @@
+# W640 Triple Pulse Amplifier
+#
+# Three pulse amplifiers with a single trigger input (-3V -> 0V edge).
+# Outputs are isolated pulse transformers.
+#
+# Observe correct pulses on the outputs with an oscilloscope.
+#
+# Short the 1uS terminals to stretch the pulses and test timing capacitors.
+#
+# PA1:                | PA2:                | PA3:                |
+# -----------------------------------------------------------------
+# Input:  D           | Input:  K           | Input:  R           |
+# Output: H/J(-/+)    | Output: N/P(-/+)    | Output: U/V(-/+)    |
+# Timing: E/F         | Timing: L/M         | Timing: S/T         |
+#
+# The 'config' key describes how the tested board has it connections.
+#
+# 'p' - power pin, do nothing
+# 'i' - input pin on tested board
+# 'o' - output pin on tested board
+# 'O' - output pin on tested board, open collector
+# 'd' - pull down net on tested board
+# 'g' - pin should be grounded on tested board
+# '-' - pin should not be used, don't care and it will be electrically disconnected
+#
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+config='ppp--i----i----i--------------------'
+vector='-----T------------------------------'
+vector='----------T-------------------------'
+vector='---------------T--------------------'
+
+# load-* keys are used to define limit values for tests of load networks
+# present on some boards. Used when the 'd' operator is found in the config string.
+load-low='-3700mV'
+load-low-margin='200mV'
+load-high='-50mV'
+load-high-margin='100mV'
+load-current='-10mA'
+load-current-margin='1mA'
+
+# input-* keys defined limits when testing inputs
+input-current-margin='0.2mA'
+
+# For a digital '0'
+input-voltage-high='-10mV'
+input-current-high='-1.8mA'
+
+# For a digital '1'
+input-voltage-low='-3700mV'
+input-current-low='0mA'
+
+# Number of times a pin should toggle when the 'T' function is used in the vector string.
+toggles='1000'

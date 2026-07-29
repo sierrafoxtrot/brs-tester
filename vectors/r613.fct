@@ -1,4 +1,4 @@
-# Test for R603 Triple Pulse Amplifier
+# Test for R613 Triple Pulse Amplifier
 # Diode and DCD inputs
 # A logic 1 = -3V and a logic 0 = 0V
 
@@ -39,19 +39,28 @@ input-voltage-high='-50mV'
 # 'g' - pin should be grounded on tested board
 # '-' - pin should not be used, don't care and it will be electrically disconnected
 
-# Pulse amplifiers generate a fixed width "standard" pulse 100nS wide. This is much too
-# fast to capture by polling the input. Instead, each of the pulse outputs is toggled
-# multiple times and triggered by first the diode input and then the DCD input.
+# Pulse amplifiers generate a fixed width "standard R-Series" pulse 200nS wide. This is much
+# too fast to capture by polling the input. Instead, each of the pulse outputs is toggled
+# multiple times and triggered by the DCD input.
+#
 # The pulses can be captured on an oscilloscope to confirm the pulse is correct.
+#
+# When driven by the diode input, the PA will stay at ground level for 200nS or for
+# as long as the diode input is held at ground. Due to the limited speed that we can drive
+# inputs, the observed correct behaviour will be for the PA output to track the diode input.
+#
+# This "tracking" behaviour is also used to load test the output.
 
 toggles='5000'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-config='pppiio-iiio-iiio-i------------------'
-# Test PA 1 Diode input
+config='pppiiogiiiogiiiogi------------------'
+# Test PA 1 Diode input. As noted above, output will track input.
 vector='---111-1111-1111-1------------------'
-vector='---11--T111-1111-1------------------'
+vector='---110-0111-1111-1------------------'
+vector='---111-1111-1111-1------------------'
+vector='---110-0111-1111-1------------------'
 vector='---111-1111-1111-1------------------'
 
 # Test PA 1 DCD input
@@ -65,10 +74,12 @@ vector='---111-1111-1111-1------------------'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-#config'pppiio-iiio-iiio-i------------------'
-# Test PA 2 Diode input
+#config'pppiiogiiiogiiiogi------------------'
+# Test PA 2 Diode input. As noted above, output will track input.
 vector='---111-1111-1111-1------------------'
-vector='---111-111--T111-1------------------'
+vector='---111-1110-0111-1------------------'
+vector='---111-1111-1111-1------------------'
+vector='---111-1110-0111-1------------------'
 vector='---111-1111-1111-1------------------'
 
 # Test PA 2 DCD input
@@ -83,10 +94,12 @@ vector='---111-1111-1111-1------------------'
 
 #       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
 #       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
-#config'pppiio-iiio-iiio-i------------------'
-# Test PA 3 Diode input
+#config'pppiiogiiiogiiiogi------------------'
+# Test PA 3 Diode input. As noted above, output will track input.
 vector='---111-1111-1111-1------------------'
-vector='---111-1111-111--T------------------'
+vector='---111-1111-1110-0------------------'
+vector='---111-1111-1111-1------------------'
+vector='---111-1111-1110-0------------------'
 vector='---111-1111-1111-1------------------'
 
 # Test PA 3 DCD input
@@ -98,10 +111,18 @@ vector='---111-1111-1T0--1------------------'
 # Reset everything to inactive
 vector='---111-1111-1111-1------------------'
 
+#             AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#             ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#            'pppiiogiiiogiiiogi------------------'
+output-drive='---11--111--111--1------------------'
+output-drive='---11L-0111-1111-1------------------'
+output-drive='---11--011L-0111-1------------------'
+output-drive='---11--0111-111L-0------------------'
+
 
 # output-drives-strength defines how much current the outputs can sink.
 # This is a value is what the tester will load the output with.
-output-drive-strength='70mA'
+output-drive-strength='65mA'
 
 # Those two values will define the voltage drop over the transistor compared to ground. First
 # the nominal value and then a margin that defines how much the value could diff from that.
