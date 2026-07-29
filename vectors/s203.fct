@@ -1,0 +1,142 @@
+# Test for S203, Triple Flip-Flop with Direct Set and Clear,
+# DCD inputs for Clear Set
+# A logic 1 = -3V and a logic 0 = 0V
+
+# -3V = 1
+# 0V = 0
+# Define the limits when testing inputs
+input-current-low='-1.0mA'
+input-current-high='-3.7mA'
+input-current-margin='3.5mA'
+input-voltage-low='-3700mV'
+input-voltage-high='-50mV'
+
+# Define how much current the outputs can sink
+output-drive-strength='20mA'
+
+# flip-flop 1
+# D is the direct clear input
+# H (pulse) & J(level) on DCD at Set input
+# E and F are the outputs
+#
+# flip-flop 2
+# K is the direct clear input
+# N (pulse) & P(level) on DCD at Set input
+# L and M are the outputs
+#
+# flip-flop 3
+# R is the direct clear input
+# U (pulse) & V(level) on DCD at Set input
+# S and T are the outputs
+#
+# All signals are active low (logic levels)
+
+# Both flip-flops
+# M is the direct set input
+
+
+# The 'config' key describes how the tested board has it connections.
+#
+# 'p' - power pin, do nothing
+# 'i' - input pin on tested board
+# 'o' - output pin on tested board
+# 'O' - output pin on tested board, open collector
+# 'd' - pull down net on tested board
+# 'g' - pin should be grounded on tested board
+# '-' - pin should not be used, don't care and it will be electrically disconnected
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+config='pppiooiiiooiiiooii------------------'
+# Start with all inputs inactive. Ignore outputs
+vector='---1--111--111--11------------------'
+# Direct clear all flip-flops
+vector='---0--110--110--11------------------'
+# Confirm all outputs cleared
+vector='---110111101111011------------------'
+
+# Now set and clear each flip-flop
+# Set the FF1
+#
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'pppiooiiiooiiiooii------------------'
+# Drive the J Level Input active, check for no change on the outputs
+vector='---110101101111011------------------'
+# Drive the H Pulse Input active, flip-flip 1 should be set
+vector='---101001101111011------------------'
+# Drive the H Pulse Input inactive, flip-flip 1 should stay set
+vector='---101101101111011------------------'
+# Drive the J Level Input inactive, check for no change on the outputs
+vector='---101111101111011------------------'
+# Direct clear all flip-flops
+vector='---0--110--110--11------------------'
+# Confirm all outputs cleared
+vector='---110111101111011------------------'
+
+# Set the FF2
+#
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'pppiooiiiooiiiooii------------------'
+# Drive the P Level Input active, check for no change on the outputs
+vector='---110111101011011------------------'
+# Drive the N Pulse Input active, flip-flip 2 should be set
+vector='---110111010011011------------------'
+# Drive the N Pulse Input inactive, flip-flip 2 should stay set
+vector='---110111011011011------------------'
+# Drive the P Level Input inactive, check for no change on the outputs
+vector='---110111011111011------------------'
+# Direct clear all flip-flops
+vector='---0--110--110--11------------------'
+# Confirm all outputs cleared
+vector='---110111101111011------------------'
+
+# Set the FF3
+#
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#config'pppiooiiiooiiiooii------------------'
+# Drive the V Level Input active, check for no change on the outputs
+vector='---110111101111010------------------'
+# Drive the U Pulse Input active, flip-flip 2 should be set
+vector='---110111101110100------------------'
+# Drive the U Pulse Input inactive, flip-flip 2 should stay set
+vector='---110111101110110------------------'
+# Drive the V Level Input inactive, check for no change on the outputs
+vector='---110111101110111------------------'
+# Direct clear all flip-flops
+vector='---0--110--110--11------------------'
+# Confirm all outputs cleared
+vector='---110111101111011------------------'
+
+
+#             AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#             ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#     config='pppiooiiiooiiiooii------------------'
+# Drive Direct Clear inputs active, check the logic '1' outputs
+output-drive='---0-L110--110--11------------------'
+output-drive='---1--110-L110--11------------------'
+output-drive='---1--111--110-L11------------------'
+
+# TODO: Logic '0' outputs fail for load > 1mA.
+# Drive the level inputs (J, P, V) active low
+output-drive='---110101101011010------------------'
+# Drive the pulse inputs (H, N, U) active low
+output-drive='---101001010010100------------------'
+# Release the pulse inputs
+output-drive='---101101011010110------------------'
+# Test the logic '1' outputs
+output-drive='---1L-111--111--11------------------'
+output-drive='---1--111L-111--11------------------'
+output-drive='---1--111--111L-11------------------'
+
+
+# output-drives-strength defines how much current the outputs can sink.
+# This is a value is what the tester will load the output with.
+output-drive-strength='15mA'
+
+# Those two values will define the voltage drop over the transistor compared to ground. First
+# the nominal value and then a margin that defines how much the value could diff from that.
+output-voltage-high='-150mV'
+output-voltage-margin='100mV'

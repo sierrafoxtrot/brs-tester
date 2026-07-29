@@ -17,6 +17,8 @@ This table contains status of the different test vectors. A test vector should h
 |b169.fct     | OK   |    |                                     |
 |b204.fct     | I    |    |Test resistor inputs                 |
 |b213.fct     | I    |    |Need sw support for pulse            |
+|b360.fct     | OK   |    |                                     |
+|g208.fct     | OK   |    |Hardware mod needed. Details in file |
 |g209.fct     | I    |    |Need sw and hw for testing           |
 |g219.fct     | I    |    |Need sw and hw for testing           |
 |r107.fct     | OK   |    |                                     |
@@ -24,12 +26,17 @@ This table contains status of the different test vectors. A test vector should h
 |r113.fct     | OK   |    |                                     |
 |r202.fct     | I    |    |                                     |
 |r123.fct     | OK   |    |                                     |
+|r210.fct     | OK   |    |Hardware mod needed. Details in file |
 |r211.fct     | OK   |    |                                     |
+|r302.fct     | OK   |    |                                     |
+|r613.fct     | OK   |    |                                     |
 |r650.fct     | OK   |    |                                     |
 |s107.fct     | OK   |    |                                     |
 |s111.fct     | OK   |    |                                     |
 |r203.fct     | I    |    |                                     |
 |r202.fct     | OK   |    |                                     |
+|s203.fct     | I    |    |                                     |
+|s205.fct     | I    |    |                                     |
 |s206.fct     | I    |    |                                     |
 |s220.fct     | I    |    |Needs '0' output load tests          |
 |s151.fct     | OK   |    |                                     |
@@ -37,8 +44,11 @@ This table contains status of the different test vectors. A test vector should h
 |s602.fct     | I    |    |Need hw for pulse measurement        |
 |s603.fct     | I    |    |Need hw for pulse measurement        |
 |w005.fct     | OK   |    |                                     |
+|w050.fct     | OK   |    |                                     |
 |w300.fct     | OK   |    |                                     |
+|w501.fct     | OK   |    |                                     |
 |w607.fct     | OK   |    |                                     |
+|w640.fct     | OK   |    |                                     |
 
 |Status |Description                    |
 |------ |-------------------------------|
