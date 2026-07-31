@@ -414,6 +414,8 @@ Test Vector files are ASCII text and can be created and edited with any text edi
 
 Test Vector files contain several types of lines that are described below.
 
+Syntax highlighting support for vector files in Emacs and Vim/Neovim is included in the support directory.
+
 Note: Comment lines begin with “#”, and blank lines will be ignored.
 
 ### 5.1. Config Line
