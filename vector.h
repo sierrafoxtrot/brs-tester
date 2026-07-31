@@ -5,6 +5,9 @@
  *
  */
 
+#ifndef VECTOR_H
+#define VECTOR_H
+
 #define VECTOR_LENGTH 37
 
 struct config {
@@ -44,3 +47,5 @@ int vector_loadVectors(char *filename, struct config *board);
 void vector_freeVectors(void);
 void vector_initVectors(void);
 struct config *vector_allocConfig(void);
+
+#endif /* VECTOR_H */

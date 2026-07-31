@@ -5,6 +5,11 @@
  *
  */
 
+#ifndef TESTS_H
+#define TESTS_H
+
+#include "vector.h"
+
 /*
  * Do a electrical test of the tester itself
  */
@@ -15,3 +20,5 @@ int tests_checkPullDown(struct config const *b_cfg);
 int tests_checkLogic(struct config const *b_cfg, char *vector, int line_number, bool singleStep);
 int tests_checkDriveStrength(struct config const *b_cfg, char *vector, int line_number, bool singleStep);
 int tests_checkInputs(struct config const *b_cfg);
+
+#endif /* TESTS_H */

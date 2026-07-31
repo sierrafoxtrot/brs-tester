@@ -13,6 +13,7 @@
 #include <stdbool.h>
 
 #include "hal.h"
+#include "tests.h"
 #include "vector.h"
 
 static void waitUserInput(bool wait)
