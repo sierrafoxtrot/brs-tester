@@ -10,6 +10,19 @@
 
 #include "vector.h"
 
+/* ANSI/VT100 terminal escape sequences for coloured console output. */
+#define TERM_RESET        "\x1b[0m"
+#define TERM_RED          "\x1b[31m"
+#define TERM_GREEN        "\x1b[32m"
+#define TERM_YELLOW       "\x1b[33m"
+#define TERM_BLUE         "\x1b[34m"
+#define TERM_MAGENTA      "\x1b[35m"
+#define TERM_CYAN         "\x1b[36m"
+#define TERM_WHITE        "\x1b[37m"
+#define TERM_BOLD         "\x1b[1m"
+#define TERM_UNDERLINE    "\x1b[4m"
+
+
 /*
  * Do a electrical test of the tester itself
  */

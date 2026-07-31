@@ -16,6 +16,9 @@
 #include "tests.h"
 #include "vector.h"
 
+static const char *const TEST_PASS = TERM_GREEN TERM_BOLD " OK " TERM_RESET;
+static const char *const TEST_FAIL = TERM_RED   TERM_BOLD "FAIL" TERM_RESET;
+
 static void waitUserInput(bool wait)
 {
     if (wait) {
@@ -47,7 +50,7 @@ int tests_selfTest(void)
         voltage_ref_ok = 1;
     }
 
-    printf("Reference voltage: %7.1f mV (1700.0 mV)                              [ %s ]\n", voltage_ref, voltage_ref_ok ? " OK " : "FAIL");
+    printf("Reference voltage: %7.1f mV (1700.0 mV)                              [ %s ]\n", voltage_ref, voltage_ref_ok ? TEST_PASS : TEST_FAIL);
 
     /*
      * Loop through all PINS and test them, high, low and with load.
@@ -109,9 +112,9 @@ int tests_selfTest(void)
 
             printf("PIN %s, D '1':%d (%7.1f mV) [%s], D '0':%d (%7.1f mV) [%s], I -4 mA: %7.1f mA [%s]\n",
                     str,
-                    data_h, voltage_h, (data_h && voltage_h_ok) ? " OK " : "FAIL",
-                    data_l, voltage_l, (!data_l && voltage_l_ok) ? " OK " : "FAIL",
-                    current, current_ok ? " OK " : "FAIL");
+                    data_h, voltage_h, (data_h && voltage_h_ok) ? TEST_PASS : TEST_FAIL,
+                    data_l, voltage_l, (!data_l && voltage_l_ok) ? TEST_PASS : TEST_FAIL,
+                    current, current_ok ? TEST_PASS : TEST_FAIL);
             pin_setMeasure(k, 0);
             pin_setFunction(k, PIN_DISABLED);
         }
@@ -148,7 +151,7 @@ int tests_selfTest(void)
         }
 
         printf("Load: %.2d Meas: (%7.1f mA) (%7.1f mA)                              [ %s ]\n",
-               curr * -1, current, currents[i], (current_ok) ? " OK " : "FAIL");
+               curr * -1, current, currents[i], (current_ok) ? TEST_PASS : TEST_FAIL);
     }
 
     pin_setFunction(AE, PIN_DISABLED);
@@ -176,7 +179,7 @@ int tests_selfTest(void)
         result = (fabs(current) > 28.0 && fabs(voltage) < 400.0);
 
         printf("Drive strength: %.2d mA, meas: (%7.1f mA) (%7.1f mV)                 [ %s ]\n",
-            32, current, voltage, (result) ? " OK " : "FAIL");
+            32, current, voltage, (result) ? TEST_PASS : TEST_FAIL);
 
         pin_setDataOut(pin, 1);
         pin_setMeasure(pin, 0);
@@ -323,7 +326,7 @@ int tests_checkVoltages(struct config const *b_cfg)
                 retVal = -1;
             }
 
-            printf("Pin: %s %c voltage %7.1f                 [ %s ]\n", pinName, str[pin], voltage, voltage_ok ? " OK " : "FAIL");
+            printf("Pin: %s %c voltage %7.1f                 [ %s ]\n", pinName, str[pin], voltage, voltage_ok ? TEST_PASS : TEST_FAIL);
             break;
         default:
             printf("ERROR: Format error\n");
@@ -403,9 +406,9 @@ int tests_checkPullDown(struct config const *b_cfg)
 
             printf("Pin: %s %c V_low: %7.1fmV [ %s ]  V_high: %7.1fmV [ %s ]  I: %7.1fmA [ %s ]\n",
                     pinName, str[pin],
-                    voltage_l, voltage_l_ok ? " OK " : "FAIL",
-                    voltage_h, voltage_h_ok ? " OK " : "FAIL",
-                    current, current_ok ? " OK " : "FAIL");
+                    voltage_l, voltage_l_ok ? TEST_PASS : TEST_FAIL,
+                    voltage_h, voltage_h_ok ? TEST_PASS : TEST_FAIL,
+                    current, current_ok ? TEST_PASS : TEST_FAIL);
             break;
         default:
             printf("ERROR: Format error\n");
@@ -513,7 +516,7 @@ int tests_checkLogic(struct config const *b_cfg, char *vector, int line_number, 
             return -1;
         }
     }
-    printf(" [ %3d | %s ]", line_number, test_failed ? "FAIL" : " OK ");
+    printf(" [ %3d | %s ]", line_number, test_failed ? TEST_FAIL : TEST_PASS);
     waitUserInput(singleStep);
     return 0;
 }
@@ -597,7 +600,7 @@ int tests_checkDriveStrength(struct config const *b_cfg, char *vector, int line_
                                                                       b_cfg->output_drive_strength,
                                                                       voltage,
                                                                       line_number,
-                                                                      result ? " ok " : "fail");
+                                                                      result ? TEST_PASS : TEST_FAIL);
             waitUserInput(singleStep);
 
             test_run = true;
@@ -670,7 +673,7 @@ int tests_checkInputs(struct config const *b_cfg)
             }
 
             printf("Pin: %s 0 V: %7.1fmV [ %s ]    I: %7.1fmA [ %s ]\n", str, voltage,
-                    voltage_result ? " OK " : "FAIL", current, current_result ? " OK " : "FAIL");
+                    voltage_result ? TEST_PASS : TEST_FAIL, current, current_result ? TEST_PASS : TEST_FAIL);
             pin_setDataOut(pin, 0);
             usleep(100000);
             hal_measureCurrent(&current);
@@ -688,7 +691,7 @@ int tests_checkInputs(struct config const *b_cfg)
                 current_result = 1;
             }
             printf("Pin: %s 1 V: %7.1fmV [ %s ]    I: %7.1fmA [ %s ]\n", str, voltage,
-                    voltage_result ? " OK " : "FAIL", current, current_result ? " OK " : "FAIL");
+                    voltage_result ? TEST_PASS : TEST_FAIL, current, current_result ? TEST_PASS : TEST_FAIL);
             pin_setMeasure(pin, 0);
             pin_setDataOut(pin, 0);
         }
