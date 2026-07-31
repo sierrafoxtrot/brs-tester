@@ -416,7 +416,7 @@ int tests_checkPullDown(struct config const *b_cfg)
 }
 
 
-int tests_checkLogic(struct config const *b_cfg, char *vector, bool singleStep)
+int tests_checkLogic(struct config const *b_cfg, char *vector, int line_number, bool singleStep)
 {
     char const *setup = b_cfg->pin_def;
     bool test_failed = false;
@@ -512,13 +512,13 @@ int tests_checkLogic(struct config const *b_cfg, char *vector, bool singleStep)
             return -1;
         }
     }
-    printf("      [ %s ]", test_failed ? "FAIL" : " OK ");
+    printf(" [ %3d | %s ]", line_number, test_failed ? "FAIL" : " OK ");
     waitUserInput(singleStep);
     return 0;
 }
 
 
-int tests_checkDriveStrength(struct config const *b_cfg, char *vector, bool singleStep)
+int tests_checkDriveStrength(struct config const *b_cfg, char *vector, int line_number, bool singleStep)
 {
     printf("%s\n", vector);
 
@@ -592,10 +592,11 @@ int tests_checkDriveStrength(struct config const *b_cfg, char *vector, bool sing
             /*
              * Do some limit testing. Compare voltage
              */
-            printf("Pin %s %3d mA  voltage %7.1f mV         [ %s ]", pinName,
-                                                                     b_cfg->output_drive_strength,
-                                                                     voltage,
-                                                                     result ? " ok " : "fail");
+            printf("Pin %s %3d mA  voltage %7.1f mV    [ %3d | %s ]", pinName,
+                                                                      b_cfg->output_drive_strength,
+                                                                      voltage,
+                                                                      line_number,
+                                                                      result ? " ok " : "fail");
             waitUserInput(singleStep);
 
             test_run = true;
