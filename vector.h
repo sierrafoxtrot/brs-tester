@@ -33,8 +33,9 @@ enum type {
 };
 
 struct vector {
-    char *vector;
+    char     *vector;
     enum type type;
+    int       line_number;
 };
 
 extern struct vector vectors[];

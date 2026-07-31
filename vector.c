@@ -188,6 +188,7 @@ int vector_loadVectors(char *filename, struct config *board)
             vectors[k].vector = malloc(VECTOR_LENGTH);
             strncpy(vectors[k].vector, &str[8], VECTOR_LENGTH);
             vectors[k].vector[VECTOR_LENGTH-1] = '\0';
+            vectors[k].line_number = i;
             k++;
             vectors[k].vector = NULL;
         } else if (0 == strncmp("output-drive='", str, 14)){
@@ -202,6 +203,7 @@ int vector_loadVectors(char *filename, struct config *board)
             vectors[k].vector = malloc(VECTOR_LENGTH);
             strncpy(vectors[k].vector, &str[14], VECTOR_LENGTH);
             vectors[k].vector[VECTOR_LENGTH-1] = '\0';
+            vectors[k].line_number = i;
             k++;
             vectors[k].vector = NULL;
         } else if (0 == strncmp("load-low='", str, sizeof("load-low='")-1)) {

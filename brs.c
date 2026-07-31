@@ -270,10 +270,10 @@ int main (int argc, char *argv[])
         while (l < args.loops) {
             int k=0;
             printf("AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB\n");
-            printf("ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV\n");
+            printf("ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV [ Line|Result]\n");
             while(vectors[k].vector != NULL) {
                 if  (vectors[k].type == TYPE_LOGIC) {
-                    tests_checkLogic(board_config, vectors[k].vector, args.single_step);
+                    tests_checkLogic(board_config, vectors[k].vector, vectors[k].line_number, args.single_step);
                 }
                 k++;
             }
@@ -286,8 +286,8 @@ int main (int argc, char *argv[])
         while(vectors[k].vector != NULL) {
             if  (vectors[k].type == TYPE_OUTPUT) {
                 printf("AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB\n");
-                printf("ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV\n");
-                tests_checkDriveStrength(board_config, vectors[k].vector, args.single_step);
+                printf("ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV [ Line|Result]\n");
+                tests_checkDriveStrength(board_config, vectors[k].vector, vectors[k].line_number, args.single_step);
             }
             if (vectors[k].type == TYPE_DEBUG_EXIT) {
                 return 0;
