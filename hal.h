@@ -5,6 +5,10 @@
  *
  */
 
+#ifndef HAL_H
+#define HAL_H
+
+
 /*
  * Definition of PIN vs number
  */
@@ -78,3 +82,5 @@ int pin_setGnd(enum fc_pin pin, int data);
 int pin_getValue(enum fc_pin pin, int *val);
 int pin_getName(enum fc_pin pin, char **str);
 enum fc_pin pin_getIndex(char *str);
+
+#endif /* HAL_H */
