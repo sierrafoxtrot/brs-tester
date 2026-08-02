@@ -1,0 +1,94 @@
+# Test for S284, Quadraflop (Quad Flip-Flop)
+#
+# This flip-chip is a 1 of 4 output latch. Any single output can be active.
+# Any '1' output being asserted also asserts the "active output".
+# The "disable terminal" prevents any '1' output from being asserted.
+# Combining these allows a chain of quadraflops to ensure 1 of n outputs.
+#
+# Inputs
+# Flip-flop 1    | Flip-flop 2    | Flip-flop 3    | Flip-flop 4    |
+# ---------------+----------------+----------------+----------------+
+# '1' output: J  | '1' output: D  | '1' output: F  | '1' output: E  |
+# '0' output: U  | '0' output: T  | '0' output: M  | '0' output: L  |
+# Async clear:N  | Async clear:P  | Async clear:S  | Async clear:R  |
+#
+#
+# Active output terminal: H (active logic '0' ie GND)
+# Disable input terminal: V (active logic '0' ie GND)
+#
+# Logic levels in this test
+# -3V = 1
+# 0V = 0
+
+# Define the limits when testing inputs
+input-current-low='10.0mA'
+input-current-high='-10mA'
+input-current-margin='10mA'
+input-voltage-low='-3700mV'
+input-voltage-high='-100mV'
+
+# Define how much current the outputs can sink
+output-drive-strength='12mA'
+
+# The 'config' key describes how the tested board has it connections.
+#
+# 'p' - power pin, do nothing
+# 'i' - input pin on tested board
+# 'o' - output pin on tested board
+# 'O' - output pin on tested board, open collector
+# 'd' - pull down net on tested board
+# 'g' - pin should be grounded on tested board
+# '-' - pin should not be used, don't care and it will be electrically disconnected
+
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+config='pppooooo-iiiiiiiii------------------'
+
+# Drive disable input clearing the active output
+vector='------1--111111110------------------'
+vector='------0--111111111------------------'
+
+# Drive FF1 '1' output active low clearing the FF
+vector='---10000-111111011------------------'
+vector='---10000-111111111------------------'
+
+# Drive FF2 '10' output active low clearing the FF
+#ector='---00000-111111111------------------'
+vector='---01000-011111111------------------'
+vector='---01000-111111111------------------'
+
+# Drive FF3 '1' output active low clearing the FF
+#ector='---00010-111111110------------------'
+vector='---00100-101111111------------------'
+vector='---00100-111111111------------------'
+
+# Drive FF4 '1' output active low clearing the FF
+#ector='---00010-111111110------------------'
+vector='---00001-111111101------------------'
+vector='---00001-111111111------------------'
+
+
+# Define output testing. One line to set inputs so that the outputs are "0".
+# Outputs can only be loaded to -3V. The output value is not used but can be
+# useful. The L defines which outputs that should be tested. They can be on
+# a single line but can also be on several rows.
+
+#             AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#             ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#            'pppooooo-iiiiiiiii------------------'
+output-drive='---------111111111------------------'
+output-drive='---L-----011111111------------------'
+output-drive='----L----111111011------------------'
+output-drive='-----L---111111011------------------'
+output-drive='------L--111111011------------------'
+output-drive='-------L-111111011------------------'
+
+# output-drives-strength defines how much current the outputs can sink. This is a value is what
+# the tester will load the output with.
+
+
+# Those two values will define the voltage drop over the transistor compared top ground. First
+# the nominal value and then a margin that defines how much the value could diff from that.
+# In this example the drop might be ok if it in between 0 .. -300mV. -150 mV +/-150mV
+output-voltage-high='-150mV'
+output-voltage-margin='150mV'
