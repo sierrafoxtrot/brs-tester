@@ -67,6 +67,28 @@ vector='---00100-111111111------------------'
 vector='---00001-111111101------------------'
 vector='---00001-111111111------------------'
 
+#debug
+#       AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB
+#       ABCDEFHJKLMNPRSTUVABCDEFHJKLMNPRSTUV
+#onfig='pppooooo-iiiiiiiii------------------'
+
+# Input N hits output E
+vector='---00100-110111111------------------'
+vector='---00100-111111111------------------'
+
+# Input P hits output F
+vector='---00100-111011111------------------'
+vector='---00100-111111111------------------'
+
+# Input S hits output J
+vector='---00001-111110111------------------'
+vector='---00001-111111111------------------'
+
+# Input R hits output J Also?1?!?
+vector='---00001-111101111------------------'
+vector='---00001-111111111------------------'
+
+
 
 # Define output testing. One line to set inputs so that the outputs are "0".
 # Outputs can only be loaded to -3V. The output value is not used but can be
@@ -83,11 +105,8 @@ output-drive='-----L---111111011------------------'
 output-drive='------L--111111011------------------'
 output-drive='-------L-111111011------------------'
 
-# output-drives-strength defines how much current the outputs can sink. This is a value is what
-# the tester will load the output with.
 
-
-# Those two values will define the voltage drop over the transistor compared top ground. First
+# These two values will define the voltage drop over the transistor compared top ground. First
 # the nominal value and then a margin that defines how much the value could diff from that.
 # In this example the drop might be ok if it in between 0 .. -300mV. -150 mV +/-150mV
 output-voltage-high='-150mV'
